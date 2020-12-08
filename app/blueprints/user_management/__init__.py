@@ -19,6 +19,10 @@ def index():
 def users_index():
     return users_views.index()
 
+@user_management.route('/users/<id>/')
+def users_show(id):
+    return users_views.show(id)
+
 @user_management.route('/users/new/', methods=['GET'])
 def users_new():
     return users_views.new()
