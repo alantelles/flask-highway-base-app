@@ -5,3 +5,6 @@ class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), default='normal')
     users = db.relationship('User', secondary=user_roles, backref=db.backref('User'))
+
+    def __repr__(self):
+        return self.name
