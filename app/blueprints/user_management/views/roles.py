@@ -12,7 +12,7 @@ class RolesViews:
         role = Role(name=name)
         db.session.add(role)
         db.session.commit()
-        return redirect(url_for('user_management.roles.show, id=role.id'))
+        return redirect(url_for('user_management.roles.show', id=role.id))
 
     def new(self):
         return render_template('user_management/roles/new.html')

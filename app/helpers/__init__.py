@@ -39,7 +39,7 @@ def register_routes(blueprint_name, **views_collections):
                     sani_route = sanitize_url(entry['route'])
                     route = f'{sani_prefix}{namespace}{sani_route}'
                     route_name = entry['name']
-                    route_name = f'{prefix}.{namespace}.{route_name}'
+                    route_name = f'{blueprint_name}.{namespace}.{route_name}'
                     action_name = entry['name']
                     if view in entry:
                         action_name = entry['view']
