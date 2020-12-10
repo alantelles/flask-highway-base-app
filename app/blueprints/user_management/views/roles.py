@@ -5,6 +5,7 @@ from app.blueprints.user_management.models.role import Role
 class RolesViews:
     def index(self):
         roles = Role.query.all()
+        
         return render_template('user_management/roles/index.html', roles=roles)
 
     def create(self):
@@ -19,6 +20,7 @@ class RolesViews:
 
     def show(self, id):
         role = Role.query.filter_by(id=id).first()
+        
         return render_template('user_management/roles/show.html', role=role)
 
 roles_views = RolesViews()

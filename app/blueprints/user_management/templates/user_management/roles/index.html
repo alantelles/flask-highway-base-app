@@ -2,10 +2,23 @@
 {% block content %}
 <h1>Roles</h1>
 <p>This is the roles index</p>
-<ul>
-{% for r in roles %}
-    <li><a href="{{ url_for('user_management.roles.show', id=r.id)}}">{{ r.name }}</a></li>
-{% endfor %}
-</ul>
-<p><a href="{{ url_for('user_management.roles.new') }}">Create new role</a></p>
+
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col" class="id_show">#</th>
+        <th scope="col">Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for r in roles %}
+    <tr>
+        <th scope="row">{{ r.id }}</th>
+        <td><a href="{{ url_for('user_management.roles.show', id=r.id)}}">{{ r.name }}</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ url_for('user_management.roles.new') }}"><button class="btn btn-primary">Create new role</button></a>
 {% endblock %}

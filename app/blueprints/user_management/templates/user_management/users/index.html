@@ -9,5 +9,6 @@
     <li>No users registered</li>
 {% endfor %}
 </ul>
-<p><a href="{{ url_for('user_management.users.new') }}">Create new user</a></p>
+
+<a href="{{ url_for('user_management.users.new') }}"><button class="btn btn-primary">Create new user</button></a>
 {% endblock %}
