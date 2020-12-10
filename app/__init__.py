@@ -12,8 +12,11 @@ db = SQLAlchemy(app)
 
 from app import routes
 
+
 from app.blueprints.user_management import user_management
-app.register_blueprint(user_management, url_prefix='/user_management')
+
+app.register_blueprint(user_management)
+from app.blueprints.user_management import routes
 
 try:
     db.create_all()
