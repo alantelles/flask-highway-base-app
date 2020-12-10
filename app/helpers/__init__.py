@@ -16,7 +16,9 @@ def register_routes(blueprint_name, **views_collections):
     bp_path = os.path.join(os.getcwd(), 'app', 'blueprints', blueprint_name)
     with open(f'{bp_path}/routes.yaml') as routes:
         rts = yaml.load(routes, Loader=yaml.FullLoader)
-        prefix = rts['URL_PREFIX']
+        prefix = blueprint_name
+        if 'url_prefix' in rts:
+            prefix = rts['url_prefix']
         sani_prefix = sanitize_url(prefix)
         if 'root' in rts:
             root = rts['root']

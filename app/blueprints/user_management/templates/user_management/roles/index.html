@@ -4,7 +4,8 @@
 <p>This is the roles index</p>
 <ul>
 {% for r in roles %}
-    <li><a href="{{ url_for('user_management.roles_show', id=r.id)}}">{{ r.name }}</a></li>
+    <li><a href="{{ url_for('user_management.roles.show', id=r.id)}}">{{ r.name }}</a></li>
 {% endfor %}
 </ul>
+<p><a href="{{ url_for('user_management.roles.new') }}">Create new role</a></p>
 {% endblock %}

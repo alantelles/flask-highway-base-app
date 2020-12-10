@@ -1,5 +1,3 @@
-URL_PREFIX: user_management
-
 root: user_management_views.index
 
 namespaces:
@@ -13,6 +11,22 @@ namespaces:
       # if method is omitted will default to GET
 
     # a complete declaration demonstration
+    - route: '<id>'
+      name: show
+      view: show
+      method: GET
+
+    - route: 'new'
+      name: new
+
+    - route: 'new'
+      name: create
+      method: POST
+
+  roles:
+    - route: ''
+      name: index
+
     - route: '<id>'
       name: show
       view: show

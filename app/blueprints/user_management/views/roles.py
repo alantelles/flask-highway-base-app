@@ -1,4 +1,4 @@
-from flask import render_template, redirect, request
+from flask import render_template, redirect, request,url_for
 from app import db
 from app.blueprints.user_management.models.role import Role
 
@@ -12,7 +12,7 @@ class RolesViews:
         role = Role(name=name)
         db.session.add(role)
         db.session.commit()
-        return 'saved'
+        return redirect(url_for('user_management.roles.show, id=role.id'))
 
     def new(self):
         return render_template('user_management/roles/new.html')

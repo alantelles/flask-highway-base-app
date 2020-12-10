@@ -3,11 +3,15 @@ from app.blueprints.user_management.models.user import User
 from app.blueprints.user_management.models.role import Role
 from app import db
 
+
 class UsersViews:
+    def render_local(self, temp, **cont):
+        return render_template(f'user_management/users/{temp}.html', **cont)
+
     def index(self):
         users = User.query.all()
         return render_template('user_management/users/index.html', users=users)
-
+        
     def show(self, id):
         user = User.query.filter_by(id=id).first()
         return render_template('user_management/users/show.html', user=user)
@@ -30,6 +34,6 @@ class UsersViews:
             user.roles.append(r)
         db.session.add(user)
         db.session.commit()
-        return redirect(url_for('user_management.users_show', id=user.id))
+        return redirect(url_for('user_management.users.show', id=user.id))
     
 users_views = UsersViews()

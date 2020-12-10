@@ -9,14 +9,12 @@ from app import config
 
 db = SQLAlchemy(app)
 
+from app import entry_routes
 
-from app import routes
-
-
+#DON'T REMOVE: blueprints register section
 from app.blueprints.user_management import user_management
-
 app.register_blueprint(user_management)
-from app.blueprints.user_management import routes
+#END: blueprints register section
 
 try:
     db.create_all()

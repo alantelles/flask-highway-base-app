@@ -1,6 +1,13 @@
 import os
 from flask import Blueprint, render_template, request
 
+from app.helpers import register_routes
+
+#DON'T REMOVE: blueprint views register section
+from app.blueprints.user_management.views.users import users_views
+from app.blueprints.user_management.views.roles import roles_views
+#END: blueprint views register section
+
 user_management = Blueprint('user_management', __name__, template_folder='templates')
 user_management_path = os.path.join(os.getcwd(), 'app', 'blueprints', 'user_management')
 
@@ -13,3 +20,10 @@ class UserManagementViews:
 
 user_management_views = UserManagementViews()
 
+
+register_routes(
+    'user_management', 
+    users=users_views, 
+    roles=roles_views, 
+    user_management_views=user_management_views
+)

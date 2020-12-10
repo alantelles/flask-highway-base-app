@@ -4,7 +4,10 @@
 <p>This is the users index</p>
 <ul>
 {% for user in users %}
-    <li><a href="{{ url_for('user_management.users_show', id=user.id) }}">{{ user.name }}</a></li>
+    <li><a href="{{ url_for('user_management.users.show', id=user.id) }}">{{ user.name }}</a></li>
+{% else %}
+    <li>No users registered</li>
 {% endfor %}
 </ul>
+<p><a href="{{ url_for('user_management.users.new') }}">Create new user</a></p>
 {% endblock %}
