@@ -1,14 +1,11 @@
 from flask import render_template
 
 from app import app
-from app.blueprints.user_management.views import session
 
 
 
-@app.before_request
-@session.verify_role
-def before_request():
-    pass
+
+
 
 @app.route('/')
 def index():

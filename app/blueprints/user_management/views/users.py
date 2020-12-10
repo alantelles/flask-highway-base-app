@@ -2,16 +2,16 @@ from flask import render_template, request, redirect, url_for
 from app.blueprints.user_management.models.user import User
 from app.blueprints.user_management.models.role import Role
 from app import db
-
+from app.blueprints.user_management.views import access_control
 
 class UsersViews:
-    def render_local(self, temp, **cont):
-        return render_template(f'user_management/users/{temp}.html', **cont)
 
+    @access_control.roles_allowed('admin')
     def index(self):
         users = User.query.all()
         return render_template('user_management/users/index.html', users=users)
-        
+    
+    @access_control.only_admin
     def show(self, id):
         user = User.query.filter_by(id=id).first()
         return render_template('user_management/users/show.html', user=user)

@@ -51,7 +51,7 @@ def register_routes(blueprint_name, **views_collections):
                     if 'method' in entry:
                         methods = [entry['method']]
                     
-                    print(f'Registering route {route_name} for {route} in {namespace}')
+                    #print(f'Registering route {route_name} for {route} in {namespace}')
                     app.add_url_rule(route, route_name, view, methods=methods)
 
         
