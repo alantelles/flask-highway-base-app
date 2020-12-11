@@ -34,6 +34,21 @@ def only_admin(fn):
 
     return wrapper
 
+def must_be_logged(fn):
+    def wrapper(self, *args, **kwargs):
+        
+        logged = g.access.user
+        print(logged)
+        if logged:
+            return fn(self, *args, **kwargs)
+
+        else:
+            print("passei aqui")
+            flash('You must be logged to see this page', 'info')
+            return redirect(url_for('login'))
+
+    return wrapper
+
 def try_login_user(form_data):
     user = User.query.filter_by(username=form_data['username']).first()
 
@@ -50,7 +65,6 @@ def logout_user():
     session['logged_user'] = None
     print('Logging user out')
     g.access = AccessController()
-    print(g.access.user)
     flash('You were logged out', 'info')
     return redirect(url_for('login'))
 
@@ -63,7 +77,7 @@ class AccessController:
         self.user = None
         
     def setup_user(self):
-        print(session['logged_user'])
+        
         user_id = session.get('logged_user')
         if user_id:
             user = User.query.get(user_id)
@@ -81,7 +95,7 @@ def set_access_controller_helper():
 
 @app.context_processor
 def session_helpers():
-    print(g.access.user)
+    
     return dict(
             access=g.access
         )

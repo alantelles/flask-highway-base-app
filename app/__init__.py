@@ -9,7 +9,7 @@ from app import config
 
 db = SQLAlchemy(app)
 
-from app import entry_routes
+from app import app_views
 
 @app.context_processor
 def inject_dict_for_all_templates():
