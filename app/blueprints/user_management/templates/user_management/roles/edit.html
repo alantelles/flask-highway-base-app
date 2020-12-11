@@ -1,7 +1,7 @@
 {% extends 'layouts/base.html' %}
 {% block content %}
 <h1>Roles</h1>
-<h3>Edit role {{ role.name }}</h3>
+<h3>Edit role <strong>{{ role.name }}</strong></h3>
 <form action="{{ url_for('user_management.roles.update', id=role.id) }}" method="post">
     <div class="form-group">
         <label for="name"></label>

@@ -1,4 +1,5 @@
 root: user_management_views.index
+log_register: true
 
 namespaces:
   users:
