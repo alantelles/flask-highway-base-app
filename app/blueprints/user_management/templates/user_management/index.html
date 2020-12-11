@@ -3,8 +3,7 @@
 <h1>User management</h1>
 <p>This is the user management index</p>
 <ul>
-{% for cont in views %}
-    <li>{{ cont }}</li>
-{% endfor %}
+    <li><a href="{{ url_for('user_management.users.index') }}">Users</a></li>
+    <li><a href="{{ url_for('user_management.roles.index') }}">Roles</a></li>
 </ul>
 {% endblock %}

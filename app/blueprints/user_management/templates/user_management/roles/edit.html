@@ -1,0 +1,14 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+<h1>Roles</h1>
+<h3>Edit role <strong>{{ role.name }}</strong></h3>
+<form action="{{ url_for('user_management.roles.update', id=role.id) }}" method="post">
+    <div class="form-group">
+        <label for="name"></label>
+        <input class="form-control" value="{{ role.name }}" type="text" name="name" id="name">
+    </div>
+    <input class="btn btn-primary" type="submit" value="Save">
+    <a href="{{ url_for('user_management.roles.index') }}"><button type="button" class="btn btn-primary">All roles</button></a>
+</form>
+
+{% endblock %}

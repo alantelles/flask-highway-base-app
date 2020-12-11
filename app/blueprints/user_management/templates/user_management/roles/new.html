@@ -1,10 +1,14 @@
 {% extends 'layouts/base.html' %}
 {% block content %}
 <h1>Roles</h1>
-<h3>New Role</h3>
+<h3>Create new role</h3>
 <form action="{{ url_for('user_management.roles.create') }}" method="post">
-    <label for="name"></label>
-    <input type="text" name="name" id="name">
-    <input type="submit" value="Save">
+    <div class="form-group">
+        <label for="name"></label>
+        <input class="form-control"  type="text" name="name" id="name">
+    </div>
+    <input class="btn btn-primary" type="submit" value="Save">
+    <a href="{{ url_for('user_management.roles.index') }}"><button class="btn btn-primary">All roles</button></a>
 </form>
+
 {% endblock %}

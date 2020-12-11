@@ -13,9 +13,13 @@ def sanitize_url(prefix, place='both'):
 def register_routes(blueprint_name, **views_collections):
     dict_views = locals()['views_collections']
     #(f'{URL_PREFIX}/users/', 'user_management.users.index', users_views.index, methods=['GET'])
+    
     bp_path = os.path.join(os.getcwd(), 'app', 'blueprints', blueprint_name)
     with open(f'{bp_path}/routes.yaml') as routes:
         rts = yaml.load(routes, Loader=yaml.FullLoader)
+        log_register = False
+        if 'log_register' in rts:
+            log_register = True
         prefix = blueprint_name
         if 'url_prefix' in rts:
             prefix = rts['url_prefix']
@@ -50,8 +54,8 @@ def register_routes(blueprint_name, **views_collections):
                     methods = ['GET']
                     if 'method' in entry:
                         methods = [entry['method']]
-                    
-                    #print(f'Registering route {route_name} for {route} in {namespace}')
+                    if log_register:
+                        print(f'Registering route {route_name} for {route} in {namespace}')
                     app.add_url_rule(route, route_name, view, methods=methods)
 
         
