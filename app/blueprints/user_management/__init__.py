@@ -8,11 +8,14 @@ from app.blueprints.user_management.views.users import users_views
 from app.blueprints.user_management.views.roles import roles_views
 #END: blueprint views register section
 
+from app.blueprints.user_management.views.access_control import only_admin
+
 user_management = Blueprint('user_management', __name__, template_folder='templates')
 user_management_path = os.path.join(os.getcwd(), 'app', 'blueprints', 'user_management')
 
 
 class UserManagementViews:
+    @only_admin
     def index(self):
         controllers_list = os.listdir(os.path.join(os.getcwd(), 'app', 'blueprints', 'user_management', 'views'))
         filtered = [filt for filt in controllers_list if not filt.startswith('__')]

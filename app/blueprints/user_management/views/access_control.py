@@ -21,14 +21,15 @@ def roles_allowed(role_list):
 def only_admin(fn):
     def wrapper(self, *args, **kwargs):
         print("only admin can view this")
-        logged = session.get('logged')
+        logged = g.access.user
         if logged:
-            if logged.get('is_admin'):
+            if g.access.is_admin:
                 return fn(self, *args, **kwargs)
             else:
                 flash('This page is only allowed to system administrator', 'info')
-                return redirect(url_for('index'))
+                return redirect(url_for('login'))
         else:
+            flash('This page is only allowed to system administrator', 'info')
             return redirect(url_for('login'))
 
     return wrapper
@@ -38,7 +39,7 @@ def try_login_user(form_data):
 
     if user.check_password(form_data['password']):
         #
-        session['logged_user']
+        session['logged_user'] = user.id
         return redirect(url_for('index'))
 
     else:
@@ -46,24 +47,28 @@ def try_login_user(form_data):
         return redirect(url_for('login'))
 
 def logout_user():
-    session['logged'] = None
+    session['logged_user'] = None
+    print('Logging user out')
+    g.access = AccessController()
+    print(g.access.user)
+    flash('You were logged out', 'info')
     return redirect(url_for('login'))
 
 class AccessController:
     def __init__(self):
-        self.is_anonymous = None
+        self.is_anonymous = True
         self.is_admin = None
         self.roles = None
         self.roles_names = None
         self.user = None
         
     def setup_user(self):
+        print(session['logged_user'])
         user_id = session.get('logged_user')
         if user_id:
             user = User.query.get(user_id)
             if user:
                 self.user = user
-        #session['logged']['id'] = user.id
                 self.roles = [role.id for role in user.roles]
                 self.roles_names = [role.name for role in user.roles]
                 self.is_anonymous = False
@@ -76,6 +81,7 @@ def set_access_controller_helper():
 
 @app.context_processor
 def session_helpers():
+    print(g.access.user)
     return dict(
             access=g.access
         )
