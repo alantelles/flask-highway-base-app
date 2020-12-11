@@ -13,7 +13,7 @@ def index():
 
 @app.route('/login')
 def login():
-    return 'login_screen'
+    return render_template("application/login.html")
 
 @app.route('/logout')
 def logout():
