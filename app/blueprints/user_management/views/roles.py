@@ -38,4 +38,23 @@ class RolesViews:
         else:
             return 'Irregular editing try'
 
+    def destroy(self, id):
+        try:
+            role = Role.query.filter_by(id=id)
+            name = role.first().name
+            role.delete()
+            db.session.commit()
+            flash(f'Role {name} deleted successfully', 'success')
+            return {
+                'message': f'Role {name} has been deleted', 
+                'redirect': url_for('user_management.roles.index')
+            }, 200
+
+        except Exception as e:
+            print(e)
+            return {
+                'message': 'Nothing happened', 
+                'redirect': url_for('user_management.roles.show', id=id)
+            }, 500
+
 roles_views = RolesViews()

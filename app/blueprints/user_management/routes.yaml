@@ -46,3 +46,7 @@ namespaces:
     - route: 'edit/<id>'
       name: update
       method: POST
+
+    - route: 'destroy/<id>'
+      name: destroy
+      method: DELETE

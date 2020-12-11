@@ -16,4 +16,5 @@
 </div><br>
 <a href="{{ url_for('user_management.roles.index') }}"><button class="btn btn-primary">All roles</button></a>
 <a href="{{ url_for('user_management.roles.edit', id=role.id) }}"><button class="btn btn-primary">Edit this role</button></a>
+<button class="btn btn-danger" data-route="{{ url_for('user_management.roles.destroy', id=role.id) }}" id="deleteButton">Delete this role</button>
 {% endblock %}
