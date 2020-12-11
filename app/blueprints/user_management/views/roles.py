@@ -36,19 +36,28 @@ class RolesViews:
             flash(f'Role {role.name} edited successfully', 'success')
             return redirect(url_for('user_management.roles.show', id=id))
         else:
-            return 'Irregular editing try'
+            flash('Irregular editing try refused', 'error')
+            return redirect(url_for('user_management.roles.index')), 400
 
     def destroy(self, id):
         try:
-            role = Role.query.filter_by(id=id)
-            name = role.first().name
-            role.delete()
-            db.session.commit()
-            flash(f'Role {name} deleted successfully', 'success')
-            return {
-                'message': f'Role {name} has been deleted', 
-                'redirect': url_for('user_management.roles.index')
-            }, 200
+            if session.get('now_viewing', None) == id:
+                role = Role.query.filter_by(id=id)
+                role.first().users = []
+                name = role.first().name
+                role.delete()
+                db.session.commit()
+                flash(f'Role {name} deleted successfully', 'success')
+                return {
+                    'message': f'Role {name} has been deleted', 
+                    'redirect': url_for('user_management.roles.index')
+                }, 200
+
+            else:
+                return {
+                    'message': f'Irregular deleting try',
+                    'redirect': url_for('user_management.roles.index')
+                }, 400
 
         except Exception as e:
             print(e)
