@@ -23,4 +23,11 @@ class RolesViews:
         
         return render_template('user_management/roles/show.html', role=role)
 
+    def edit(self, id):
+        role = Role.query.get(id)
+        return render_template('user_management/roles/edit.html', role=role)
+
+    def update(self, id):
+        return 'updating'
+
 roles_views = RolesViews()

@@ -38,3 +38,10 @@ namespaces:
     - route: 'new'
       name: create
       method: POST
+
+    - route: 'edit/<id>'
+      name: edit
+
+    - route: 'edit/<id>'
+      name: update
+      method: POST

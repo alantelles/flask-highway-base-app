@@ -2,13 +2,18 @@
 {% block content %}
 <h1>Roles</h1>
 <p><strong>Role name: </strong>{{ role.name }}</p>
-<h3>Users with this role</h3>
-<ul>
-{% for user in role.users %}
-    <li>{{ user.name }}</li>
-{% else %}
-    <li>No users with this role</li>
-{% endfor %}
-</ul>
-<a href="{{ url_for('user_management.roles.index') }}">back to roles</a>
+<div class="card">
+    <div class="card-header">Users with this role</div>
+    <div class="card-body">
+        <ul>
+        {% for user in role.users %}
+            <li>{{ user.name }}</li>
+        {% else %}
+            <li>No users with this role</li>
+        {% endfor %}
+        </ul>
+    </div>
+</div><br>
+<a href="{{ url_for('user_management.roles.index') }}"><button class="btn btn-primary">All roles</button></a>
+<a href="{{ url_for('user_management.roles.edit', id=role.id) }}"><button class="btn btn-primary">Edit this role</button></a>
 {% endblock %}

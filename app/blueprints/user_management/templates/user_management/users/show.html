@@ -4,12 +4,18 @@
 <p><strong>User: </strong>{{ user.name }}</p>
 <p><strong>Username: </strong>{{ user.username }}</p>
 <p><strong>Password hash: </strong>{{ user.password_hash }}</p>
-<p><strong>Roles:</strong>
-    <ul>
-    {% for role in user.roles %}
-        <li>{{ role.name }}</li>
-    {% endfor %}
-    </ul>
-</p>
-<a href="{{ url_for('user_management.users.index') }}">back to users</a>
+<div class="card">
+    <div class="card-header">Roles for this user</div>
+    <div class="card-body">
+        <ul>
+        {% for role in user.roles %}
+            <li>{{ role.name }}</li>
+        {% else %}
+            <li>This user has no role</li>
+        {% endfor %}
+        </ul>
+    </div>
+</div><br>
+<a href="{{ url_for('user_management.users.index') }}"><button class="btn btn-primary">All users</button></a>
+
 {% endblock %}
