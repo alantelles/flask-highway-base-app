@@ -21,12 +21,7 @@ class UsersViews:
     def new(self):
         roles = Role.query.all()
         return render_template('user_management/users/new.html', roles=roles)
-        
-    def edit(self, id):
-        user = User.query.filter_by(id=id).first()
-        roles = Roles.query.all()
-        render_template('user_management/users/edit.html', user=user, roles=roles)
-
+   
     @only_admin
     def edit(self, id):
         session['now_edited'] = id
