@@ -19,6 +19,7 @@ class RolesViews:
         return render_template('user_management/roles/new.html')
 
     def show(self, id):
+        session['now_viewed'] = id
         role = Role.query.filter_by(id=id).first()
         
         return render_template('user_management/roles/show.html', role=role)
@@ -41,7 +42,7 @@ class RolesViews:
 
     def destroy(self, id):
         try:
-            if session.get('now_viewing', None) == id:
+            if session.get('now_viewed', None) == id:
                 role = Role.query.filter_by(id=id)
                 role.first().users = []
                 name = role.first().name

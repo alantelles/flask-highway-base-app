@@ -24,6 +24,17 @@ namespaces:
       name: create
       method: POST
 
+    - route: 'edit/<id>'
+      name: edit
+
+    - route: 'edit/<id>'
+      name: update
+      method: POST
+
+    - route: 'destroy/<id>'
+      name: destroy
+      method: DELETE
+
   roles:
     - route: ''
       name: index
