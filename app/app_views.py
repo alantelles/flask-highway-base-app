@@ -14,6 +14,7 @@ class App:
     def login_try(self):
         return try_login_user(request.form)
 
+    @must_be_logged
     def logout(self):
         return logout_user()
 

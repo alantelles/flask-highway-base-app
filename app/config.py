@@ -11,4 +11,4 @@ app.config['ADMIN_ROLE_NAME'] = 'admin'
 
 #others
 app.config['EXPLAIN_TEMPLATE_LOADING'] = False
-app.config['project_name'] = 'Flask Highway'
+app.config['project_name'] = 'Flask Highway App'
