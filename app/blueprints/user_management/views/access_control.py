@@ -27,7 +27,7 @@ def only_admin(fn):
                 return fn(self, *args, **kwargs)
             else:
                 flash('This page is only allowed to system administrator', 'info')
-                return redirect(url_for('login'))
+                return redirect(url_for('index'))
         else:
             flash('This page is only allowed to system administrator', 'info')
             return redirect(url_for('login'))
