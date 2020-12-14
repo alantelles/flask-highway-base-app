@@ -50,7 +50,7 @@ def must_be_logged(fn):
 def try_login_user(form_data):
     user = User.query.filter_by(username=form_data['username']).first()
 
-    if user.check_password(form_data['password']):
+    if user and user.check_password(form_data['password']):
         #
         session['logged_user'] = user.id
         return redirect(url_for('index'))

@@ -20,8 +20,3 @@ from app.blueprints.user_management import user_management
 app.register_blueprint(user_management)
 #END: blueprints register section
 
-try:
-    db.create_all()
-    db.session.commit()
-except Exception as e:
-    print(f"Tables not created because: {e}")
