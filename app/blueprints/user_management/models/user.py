@@ -1,9 +1,11 @@
 from app import db
+from app.models_mixins import TimeStampMixin
 from app.blueprints.user_management.models.role import Role
 from app.blueprints.user_management.models.user_roles import user_roles
 from werkzeug.security import generate_password_hash, check_password_hash
 
-class User(db.Model):
+
+class User(db.Model, TimeStampMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255))
     username = db.Column(db.String(255), unique=True)
