@@ -1,6 +1,7 @@
 from app import app
 import os
 
+
 bp_path = os.path.join(os.getcwd(), 'app', 'blueprints', 'user_management')
 rt_path = os.path.join(bp_path, 'routes.yaml')
 extra_files = []

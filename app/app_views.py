@@ -1,3 +1,5 @@
+# Core app views. You probably won't have to modify this
+
 from flask import render_template, request, session, redirect, url_for, g, flash
 
 from app import app
