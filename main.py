@@ -9,4 +9,4 @@ extra_files.append(rt_path)
 #END: extra_files add section
 
 if __name__ == '__main__':
-    app.run(debug=True, extra_files=extra_files, use_reloader=True)
+    app.run(debug=True, extra_files=extra_files)

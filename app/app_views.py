@@ -1,4 +1,4 @@
-from flask import render_template, request, session, redirect, url_for
+from flask import render_template, request, session, redirect, url_for, g, flash
 
 from app import app
 from app.blueprints.user_management.views.access_control import try_login_user, logout_user, must_be_logged
@@ -8,8 +8,14 @@ class App:
     def index(self):
         return render_template('index.html')
 
+
     def login(self):
-        return render_template("application/login.html")
+        if g.access.is_anonymous:
+            return render_template("application/login.html")
+
+        else:
+            flash('Already logged. Redirecting to index', 'info')
+            return redirect(url_for('index'))
 
     def login_try(self):
         return try_login_user(request.form)

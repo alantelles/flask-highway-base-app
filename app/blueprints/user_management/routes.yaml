@@ -3,7 +3,7 @@ root: user_management_views.index
 
 views:
   users:
-    prefix: bahol  
+    
     routes:
       - route: ''
         # all names will be prefixed with blueprint name by default
