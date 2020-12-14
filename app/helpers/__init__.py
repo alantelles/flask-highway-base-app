@@ -35,13 +35,17 @@ def register_routes(blueprint_name, **views_collections):
         else:
             print("You are not registering a root route for this blueprint. It's likely an error")
 
-        
-        if 'namespaces' in rts:
-            for namespace in rts['namespaces']:
-                ns_routes = rts['namespaces'][namespace]
+        VIEWS_KEYS_NAME = 'views'
+        if VIEWS_KEYS_NAME in rts:
+            for namespace in rts[VIEWS_KEYS_NAME]:
+                ns_data = rts[VIEWS_KEYS_NAME][namespace]
+                ns_prefix = ''
+                if 'prefix' in ns_data:
+                    ns_prefix = sanitize_url(ns_data['prefix'])
+                ns_routes = ns_data['routes']
                 for entry in ns_routes:
                     sani_route = sanitize_url(entry['route'])
-                    route = f'{sani_prefix}{namespace}{sani_route}'
+                    route = f'{sani_prefix}{ns_prefix}{namespace}{sani_route}'
                     route_name = entry['name']
                     route_name = f'{blueprint_name}.{namespace}.{route_name}'
                     action_name = entry['name']

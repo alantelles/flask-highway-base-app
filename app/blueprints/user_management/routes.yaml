@@ -1,63 +1,66 @@
 root: user_management_views.index
 
 
-namespaces:
+views:
   users:
-    - route: ''
-      # all names will be prefixed with URL_PREFIX by default
-      # this route real name will be user_management.users.index
-      name: index
-      # if view is omitted is defaulted to [namespace name].[name]
-      # in this case "users.index"
-      # if method is omitted will default to GET
+    prefix: bahol
+    routes:
+      - route: ''
+        # all names will be prefixed with blueprint name by default
+        # this route real name will be user_management.users.index
+        name: index
+        # if view is omitted is defaulted to [views name].[name]
+        # in this case "users.index"
+        # if method is omitted will default to GET
 
-    # a complete declaration demonstration
-    - route: '<id>'
-      name: show
-      view: show
-      method: GET
+      # a complete declaration demonstration
+      - route: '<id>'
+        name: show
+        view: show
+        method: GET
 
-    - route: 'new'
-      name: new
+      - route: 'new'
+        name: new
 
-    - route: 'new'
-      name: create
-      method: POST
+      - route: 'new'
+        name: create
+        method: POST
 
-    - route: 'edit/<id>'
-      name: edit
+      - route: 'edit/<id>'
+        name: edit
 
-    - route: 'edit/<id>'
-      name: update
-      method: POST
+      - route: 'edit/<id>'
+        name: update
+        method: POST
 
-    - route: 'destroy/<id>'
-      name: destroy
-      method: DELETE
+      - route: 'destroy/<id>'
+        name: destroy
+        method: DELETE
 
   roles:
-    - route: ''
-      name: index
+    routes:
+      - route: ''
+        name: index
 
-    - route: '<id>'
-      name: show
-      view: show
-      method: GET
+      - route: '<id>'
+        name: show
+        view: show
+        method: GET
 
-    - route: 'new'
-      name: new
+      - route: 'new'
+        name: new
 
-    - route: 'new'
-      name: create
-      method: POST
+      - route: 'new'
+        name: create
+        method: POST
 
-    - route: 'edit/<id>'
-      name: edit
+      - route: 'edit/<id>'
+        name: edit
 
-    - route: 'edit/<id>'
-      name: update
-      method: POST
+      - route: 'edit/<id>'
+        name: update
+        method: POST
 
-    - route: 'destroy/<id>'
-      name: destroy
-      method: DELETE
+      - route: 'destroy/<id>'
+        name: destroy
+        method: DELETE

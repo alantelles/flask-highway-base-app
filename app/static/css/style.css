@@ -8,9 +8,13 @@
 }
 
 .dropdown-item:hover, .dropdown-item:active {
-    background-color: #4ea3ff !important;
+    background-color:rgb(173, 216, 164) !important;
 }
 
 .id_show {
     width: 80px;
+}
+
+[class*="-primary"] {
+    background-color:rgb(109, 170, 97) !important;
 }
