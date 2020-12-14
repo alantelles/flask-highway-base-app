@@ -1,10 +1,14 @@
 from app import app
 import os
 
-bp_path = os.path.join('app', 'blueprints', 'user_management')
+bp_path = os.path.join(os.getcwd(), 'app', 'blueprints', 'user_management')
+rt_path = os.path.join(bp_path, 'routes.yaml')
+print(os.path.isfile(rt_path))
 extra_files = []
-print(os.path.join(bp_path, 'routes.yaml'))
-extra_files.append(os.path.join(bp_path, 'user_management', 'routes.yaml'))
+print(rt_path)
+extra_files.append(rt_path)
+#DON'T REMOVE: extra_files add section
+#END: extra_files add section
 
 if __name__ == '__main__':
-    app.run(debug=True, extra_files=extra_files)
+    app.run(debug=True, extra_files=extra_files, use_reloader=True)

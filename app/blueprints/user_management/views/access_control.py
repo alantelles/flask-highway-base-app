@@ -38,12 +38,10 @@ def must_be_logged(fn):
     def wrapper(self, *args, **kwargs):
         
         logged = g.access.user
-        print(logged)
         if logged:
             return fn(self, *args, **kwargs)
 
         else:
-            print("passei aqui")
             flash('You must be logged to see this page', 'info')
             return redirect(url_for('login'))
 
