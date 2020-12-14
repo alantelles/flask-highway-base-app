@@ -1,6 +1,7 @@
 from flask import request, session, redirect, url_for, flash, g
 from app import app
 from app.blueprints.user_management.models.user import User
+from app.blueprints.user_management.models.user_roles import UserRole
 
 admin_role_name = app.config.get('ADMIN_ROLE_NAME', 'admin')
 
@@ -81,8 +82,8 @@ class AccessController:
             user = User.query.get(user_id)
             if user:
                 self.user = user
-                self.roles = [role.id for role in user.roles]
-                self.roles_names = [role.name for role in user.roles]
+                self.roles = [assoc.role.id for assoc in user.roles]
+                self.roles_names = [assoc.role.name for assoc in user.roles]
                 self.is_anonymous = False
                 self.is_admin = admin_role_name in self.roles_names
         

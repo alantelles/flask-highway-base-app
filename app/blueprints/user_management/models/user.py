@@ -1,7 +1,7 @@
 from app import db
 from app.models_mixins import TimeStampMixin
 from app.blueprints.user_management.models.role import Role
-from app.blueprints.user_management.models.user_roles import user_roles
+from app.blueprints.user_management.models.user_roles import UserRole
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
@@ -10,7 +10,7 @@ class User(db.Model, TimeStampMixin):
     name = db.Column(db.String(255))
     username = db.Column(db.String(255), unique=True)
     password_hash = db.Column(db.String(255), unique=True)
-    roles = db.relationship('Role', secondary=user_roles, backref=db.backref('Role'))
+    roles = db.relationship('UserRole', back_populates='user')
     
 
     def set_password(pw):
