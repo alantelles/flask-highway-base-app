@@ -1,6 +1,8 @@
+import traceback
 from flask import render_template, redirect, request, url_for, session, flash
 from app import db
 from app.blueprints.user_management.models.role import Role
+from app.blueprints.user_management.models.user_role import UserRole
 from app.blueprints.user_management.views.access_control import only_admin
 
 class RolesViews:
@@ -52,7 +54,9 @@ class RolesViews:
         try:
             if session.get('now_viewed', None) == id:
                 role = Role.query.filter_by(id=id)
-                role.first().users = []
+                role.users = []
+                user_roles = UserRole.query.filter_by(role_id=role.first().id)
+                user_roles.delete()
                 name = role.first().name
                 role.delete()
                 db.session.commit()
@@ -69,7 +73,8 @@ class RolesViews:
                 }, 400
 
         except Exception as e:
-            print(e)
+            traceback.print_exc()
+            flash(f'An error occurred!', 'danger')
             return {
                 'message': 'Nothing happened', 
                 'redirect': url_for('user_management.roles.show', id=id)

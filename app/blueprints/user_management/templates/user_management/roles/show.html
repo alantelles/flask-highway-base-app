@@ -6,8 +6,8 @@
     <div class="card-header">Users with this role</div>
     <div class="card-body">
         <ul>
-        {% for user in role.users %}
-            <li><a href="{{ url_for('user_management.users.show', id=user.id) }}">{{ user.name }}</a></li>
+        {% for assoc in role.users %}
+            <li><a href="{{ url_for('user_management.users.show', id=assoc.user.id) }}">{{ assoc.user.name }}</a></li>
         {% else %}
             <li>No users with this role</li>
         {% endfor %}

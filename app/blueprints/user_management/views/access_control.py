@@ -1,7 +1,7 @@
 from flask import request, session, redirect, url_for, flash, g
 from app import app
 from app.blueprints.user_management.models.user import User
-from app.blueprints.user_management.models.user_roles import UserRole
+from app.blueprints.user_management.models.user_role import UserRole
 
 admin_role_name = app.config.get('ADMIN_ROLE_NAME', 'admin')
 
@@ -21,7 +21,6 @@ def roles_allowed(role_list):
 
 def only_admin(fn):
     def wrapper(self, *args, **kwargs):
-        print("only admin can view this")
         logged = g.access.user
         if logged:
             if g.access.is_admin:

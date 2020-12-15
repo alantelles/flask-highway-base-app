@@ -1,6 +1,6 @@
 from app import db
 from app.models_mixins import TimeStampMixin
-from app.blueprints.user_management.models.user_roles import UserRole
+from app.blueprints.user_management.models.user_role import UserRole
 
 class Role(db.Model, TimeStampMixin):
     id = db.Column(db.Integer, primary_key=True)

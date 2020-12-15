@@ -7,7 +7,7 @@ from app import db
 # DONT'REMOVE: models declare section
 from app.blueprints.user_management.models.user import User
 from app.blueprints.user_management.models.role import Role
-from app.blueprints.user_management.models.user_roles import UserRole
+from app.blueprints.user_management.models.user_role import UserRole
 #END: models declare section
 
 try:

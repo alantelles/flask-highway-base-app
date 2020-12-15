@@ -1,7 +1,7 @@
 from app import db
 from app.models_mixins import TimeStampMixin
 from app.blueprints.user_management.models.role import Role
-from app.blueprints.user_management.models.user_roles import UserRole
+from app.blueprints.user_management.models.user_role import UserRole
 from werkzeug.security import generate_password_hash, check_password_hash
 
 

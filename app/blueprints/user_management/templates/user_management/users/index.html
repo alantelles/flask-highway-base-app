@@ -16,7 +16,7 @@
     <tr>
         <th scope="row">{{ user.id }}</th>
         <td><a href="{{ url_for('user_management.users.show', id=user.id)}}">{{ user.name }}</a></td>
-        <td>{{ user.roles }}</td>
+        <td>{% for assoc in user.roles %}{{ assoc.role.name }}<br>{% endfor %}</td>
     </tr>
     {% endfor %}
     </tbody>
