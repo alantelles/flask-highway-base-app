@@ -3,7 +3,7 @@ from app.blueprints.user_management.models.user import User
 from app.blueprints.user_management.models.role import Role
 from app.blueprints.user_management.models.user_role import UserRole
 from app import db
-from app.blueprints.user_management.views.access_control import only_admin
+from app.blueprints.user_management.views.access_control import only_admin, roles_allowed
 
 class UsersViews:
 
@@ -31,6 +31,10 @@ class UsersViews:
         user = User.query.get(id)
         user_roles_ids = [r.role_id for r in user.roles]
         return render_template('user_management/users/edit.html', roles=roles, user=user, user_roles_ids=user_roles_ids)
+
+    @roles_allowed('guest', 'moderator')
+    def protect(self):
+        return "you are viewing the protect page"
 
     @only_admin
     def update(self, id):

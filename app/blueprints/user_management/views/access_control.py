@@ -5,14 +5,27 @@ from app.blueprints.user_management.models.user_role import UserRole
 
 admin_role_name = app.config.get('ADMIN_ROLE_NAME', 'admin')
 
-def roles_allowed(role_list):
+def roles_allowed(*role_list):
     def decorator(fn):
         def wrapper(self, *args):
+            can_view = False
+            if admin_role_name in g.access.roles_names:
+                can_view = True
             
-            ok = 'admin'
-            if ok in role_list:
-                return fn(self, *args)
             else:
+                for m in role_list:
+                    print(g.access.roles_names)
+                    print(role_list)
+                    print(m)
+                    if m in g.access.roles_names:
+                        can_view = True
+                        break
+
+            if can_view:
+                return fn(self, *args)
+
+            else:
+                flash("Your permissions doesn't grant you rights to see this page", 'info')
                 return redirect(url_for('login'))
 
         return wrapper
