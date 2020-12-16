@@ -1,12 +1,43 @@
 from app import db
 from datetime import datetime
+import json
 
 class TimeStampMixin(object):
     created_at = db.Column(db.DateTime(), default=datetime.now)
     updated_at = db.Column(db.DateTime(), default=None, onupdate=datetime.now)
     deleted_at = db.Column(db.DateTime(), default=None)
+    
+class Desserializer(object):
+    # class name should change to
+    # Desserializer
+    
+    forbidden_input_fields = []
+    remap_input = {}
+    process_input_key = {}
+    
+    def from_json(self, body):
+        body = json.loads(body)
+        for key in dict.copy(body):
+            if key in self.remap_input:
+                new = self.remap_input[key]
+                body[new] = body[key]
+                del body[key]
+            
+            if key in self.process_input_key:
+                fn = self.process_input_key[key]
+                body[key] = fn(body[key])
+        
+        for key in body:    
+            setattr(self, key, body[key])
+                
+            
+                
+        print(body)
+        
 
 class SerializeOutput(object):
+    # class name should change to 
+    # Serializer
 
     forbidden_fields = []
     remap = {}
