@@ -38,11 +38,29 @@ class UsersViews:
             user = User.query.get(id)
             user.name = request.form['name']
             user.username = request.form['username']
-            user.roles = []
             roles_ids = [int(id) for id in request.form.getlist('roles')]
-            roles = db.session.query(Role).filter(Role.id.in_(roles_ids)).all()
-            for r in roles:
-                user.roles.append(r)
+            if len(roles_ids):
+                user_roles = UserRole.query.filter_by(user_id=user.id).all()
+                for ur in user_roles:
+                    if ur.role.id not in roles_ids:
+                        UserRole.query.filter_by(user_id=ur.user_id, role_id=ur.role_id).delete()
+                
+
+                roles = db.session.query(Role).filter(Role.id.in_(roles_ids)).all()
+                for r in roles:
+                    print(r)
+                    print(user.roles)
+                    print(r in user.roles)
+                    user_roles_ids = [r.role_id for r in user.roles]
+                    if r.id not in user_roles_ids:
+                        assoc = UserRole()
+                        assoc.role = r
+                        assoc.user = user
+                        db.session.add(assoc)
+
+            else:
+                UserRole.query.filter_by(user_id=user.id).delete()
+
             db.session.commit()
             flash(f'User {user.name} edited successfully', 'success')
             return redirect(url_for('user_management.users.show', id=id))
