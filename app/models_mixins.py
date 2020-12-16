@@ -11,17 +11,24 @@ class Desserializer(object):
     # class name should change to
     # Desserializer
     
-    forbidden_input_fields = []
+    accept_only = []
     remap_input = {}
     process_input_key = {}
     
-    def from_json(self, body):
+    def from_json(self, body, force_accept=[]):
         body = json.loads(body)
         for key in dict.copy(body):
+            if len(self.accept_only):
+                if key not in self.accept_only and key not in force_accept:
+                    del body[key]
+        
             if key in self.remap_input:
                 new = self.remap_input[key]
-                body[new] = body[key]
-                del body[key]
+                
+                if key in body:
+                    body[new] = body[key]
+                    del body[key]
+               
             
             if key in self.process_input_key:
                 fn = self.process_input_key[key]

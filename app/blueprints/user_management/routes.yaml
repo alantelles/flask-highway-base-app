@@ -6,6 +6,7 @@ views:
     routes:
       - route: 'protect/<id>'
         name: protect
+        method: POST
 
       - route: ''
         # all names will be prefixed with blueprint name by default

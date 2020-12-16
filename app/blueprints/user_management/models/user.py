@@ -25,6 +25,8 @@ class User(db.Model, TimeStampMixin, SerializeOutput, Desserializer):
         'created_at': format_date
     }
     
+    accept_only = ['name', 'username']
+    
     process_input_key = {'password_hash': generate_password_hash}
     remap_input = {'password': 'password_hash'}
     

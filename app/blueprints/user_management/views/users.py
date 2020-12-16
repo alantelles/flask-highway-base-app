@@ -34,12 +34,14 @@ class UsersViews:
 
     
     def protect(self, id):
+        #user = User.query.get(id)
+        body = request.data
         user = User()
-        j = """{"name": "Marina Telles", "username": "marina", "password": "123123"}"""
-        user.from_json(j)
-        db.session.add(user)
-        db.session.commit()
-        return redirect(url_for('user_management.users.show', id=user.id))
+        user.from_json(body)
+        #roles = UserRole.query.filter_by(user_id=user.id).all()
+        #user.user_roles = UserRole.serialize_list(roles)
+        
+        return user.to_json()
 
     @only_admin
     def update(self, id):
