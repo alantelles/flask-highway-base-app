@@ -10,6 +10,7 @@ class SerializeOutput(object):
 
     forbidden_fields = []
     remap = {}
+    process_key = {}
     
     def serialize_list(query_return):
         out = []
@@ -30,6 +31,13 @@ class SerializeOutput(object):
                     del out[ff]
 
         for key in dict.copy(out):
+            # IMPORTANT: process happens before remap
+            # Your process keys should always use original field names
+            if key in self.process_key:            
+                fn = self.process_key[key]
+                out[key] = fn(out[key])
+
+
             if key in self.remap:
                 out[self.remap[key]] = out[key]
                 del out[key]
@@ -98,4 +106,5 @@ class SerializeOutput(object):
             else:
                 dump[key] = None
 
+            
         return dump

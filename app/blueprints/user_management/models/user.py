@@ -5,6 +5,12 @@ from app.blueprints.user_management.models.user_role import UserRole
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
+def to_upper(arg):
+    return arg.upper()
+
+def format_date(arg):
+    return arg.strftime("%d/%m/%Y %H:%M:%S")
+
 class User(db.Model, TimeStampMixin, SerializeOutput):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255))
@@ -14,6 +20,10 @@ class User(db.Model, TimeStampMixin, SerializeOutput):
 
     forbidden_fields = ['password_hash']
     remap = {'user_roles': 'roles'}
+    process_key = {
+        'name': to_upper,
+        'created_at': format_date
+    }
     
 
     def set_password(pw):
