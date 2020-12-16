@@ -66,7 +66,6 @@ class UsersViews:
                 assoc = UserRole()
                 assoc.role = r
                 user.roles.append(assoc)
-                # r.users.append(assoc)
                 db.session.add(assoc)
 
             
