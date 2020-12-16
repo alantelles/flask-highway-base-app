@@ -81,7 +81,8 @@ class UsersViews:
         try:
             if session.get('now_viewed', None) == id:
                 user = User.query.filter_by(id=id)
-                user.first().roles = []
+                user_roles = UserRole.query.filter_by(user_id=user.first().id)
+                user_roles.delete()
                 name = user.first().name
                 user.delete()
                 db.session.commit()
