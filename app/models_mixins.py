@@ -9,26 +9,88 @@ class TimeStampMixin(object):
 class SerializeOutput(object):
 
     forbidden_fields = []
+    remap = {}
+    
+    def serialize_list(query_return):
+        out = []
+        for entry in query_return:
+            out.append(entry.to_json())
+            
+        
+        return out
 
     def serialize(self, force_fields=[]):
         out = dict.copy(self.__dict__)
-        del out['_sa_instance_state']
+        if '_sa_instance_state' in out:
+            del out['_sa_instance_state']
+        print(self.forbidden_fields)
         for ff in self.forbidden_fields:
-            print(ff)
             if ff not in force_fields:
-                del out[ff]
+                if ff in out:
+                    del out[ff]
+
+        for key in dict.copy(out):
+            if key in self.remap:
+                out[self.remap[key]] = out[key]
+                del out[key]
 
         return out
+
+    def json_serialize_list(items):
+        singles = [int, bool, str, float]
+        out = []
+        for entry in items:
+            if type(entry) in singles:
+                out.append(entry)
+
+            elif type(entry) == list:
+                out.append(SerializeOutput.json_serialize_list(entry))
+
+            elif type(entry) == dict:
+                out.append(SerializeOutput.json_serialize_dict(entry))
+
+            else:
+                out.append(str(entry))
+
+        return out
+
+
+    def json_serialize_dict(items):
+        singles = [int, bool, str, float]
+        out = {}    
+        for entry in items:
+            val = items[entry]
+            if type(entry) in singles:
+                out[entry] = val
+
+            elif type(entry) == list:
+                out[entry] = SerializeOutput.json_serialize_list(val)
+
+            elif type(entry) == dict:
+                out[entry] = SerializeOutput.json_serialize_dict(val)
+
+            else:
+                out[entry] = str(entry)
+
+        return out
+            
+
 
     def to_json(self, force_fields=[]):
         out = self.serialize(force_fields)
         dump = {}
-        serializables = [int, bool, str, float, list, dict]
+        singles = [int, bool, str, float]
         for key in out:
             val = out[key]
             if val:
-                if type(val) in serializables:
+                if type(val) in singles:
                     dump[key] = val
+
+                elif type(val) == list:
+                    dump[key] = SerializeOutput.json_serialize_list(val)
+                    
+                elif type(val) == dict:
+                    dump[key] = SerializeOutput.json_serialize_dict(val)
 
                 else:
                     dump[key] = str(val)

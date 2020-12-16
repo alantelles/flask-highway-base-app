@@ -12,7 +12,8 @@ class User(db.Model, TimeStampMixin, SerializeOutput):
     password_hash = db.Column(db.String(255), unique=True)
     roles = db.relationship('UserRole', back_populates='user')
 
-    SerializeOutput.forbidden_fields = ['password_hash', 'roles']
+    forbidden_fields = ['password_hash']
+    remap = {'user_roles': 'roles'}
     
 
     def set_password(pw):

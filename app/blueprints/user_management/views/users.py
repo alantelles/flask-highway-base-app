@@ -35,6 +35,9 @@ class UsersViews:
     
     def protect(self, id):
         user = User.query.get(id)
+        user_roles = UserRole.query.filter_by(user_id=user.id).all()
+        user.user_roles = UserRole.serialize_list(user_roles)
+        
         return user.to_json()
         #return 'g'
 
