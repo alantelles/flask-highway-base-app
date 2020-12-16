@@ -32,9 +32,11 @@ class UsersViews:
         user_roles_ids = [r.role_id for r in user.roles]
         return render_template('user_management/users/edit.html', roles=roles, user=user, user_roles_ids=user_roles_ids)
 
-    @roles_allowed('guest', 'moderator')
-    def protect(self):
-        return "you are viewing the protect page"
+    
+    def protect(self, id):
+        user = User.query.get(id)
+        return user.to_json()
+        #return 'g'
 
     @only_admin
     def update(self, id):

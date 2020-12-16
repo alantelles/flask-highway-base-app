@@ -4,9 +4,9 @@ root: user_management_views.index
 views:
   users:
     routes:
-      - route: 'protect'
+      - route: 'protect/<id>'
         name: protect
-        
+
       - route: ''
         # all names will be prefixed with blueprint name by default
         # this route real name will be user_management.users.index
