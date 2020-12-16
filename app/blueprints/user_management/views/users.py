@@ -29,7 +29,8 @@ class UsersViews:
         session['now_edited'] = id
         roles = Role.query.all()
         user = User.query.get(id)
-        return render_template('user_management/users/edit.html', roles=roles, user=user)
+        user_roles_ids = [r.role_id for r in user.roles]
+        return render_template('user_management/users/edit.html', roles=roles, user=user, user_roles_ids=user_roles_ids)
 
     @only_admin
     def update(self, id):
