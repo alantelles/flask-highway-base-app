@@ -19,6 +19,7 @@ class Desserializer(object):
         body = json.loads(body)
         for key in dict.copy(body):
             if len(self.accept_only):
+                print(key in self.accept_only, key in force_accept)
                 if key not in self.accept_only and key not in force_accept:
                     del body[key]
         
@@ -29,7 +30,7 @@ class Desserializer(object):
                     body[new] = body[key]
                     del body[key]
                
-            
+        for key in body:
             if key in self.process_input_key:
                 fn = self.process_input_key[key]
                 body[key] = fn(body[key])

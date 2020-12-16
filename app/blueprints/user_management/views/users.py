@@ -37,11 +37,11 @@ class UsersViews:
         #user = User.query.get(id)
         body = request.data
         user = User()
-        user.from_json(body)
+        user.from_json(body, ["password"])
         #roles = UserRole.query.filter_by(user_id=user.id).all()
         #user.user_roles = UserRole.serialize_list(roles)
         
-        return user.to_json()
+        return user.to_json(['password_hash'])
 
     @only_admin
     def update(self, id):
