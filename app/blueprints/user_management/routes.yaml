@@ -7,6 +7,9 @@ views:
       - route: ''
         name: index
 
+      - route: 'search'
+        name: search
+
   users:
     routes:
       - route: ''

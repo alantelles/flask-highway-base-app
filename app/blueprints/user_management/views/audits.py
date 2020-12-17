@@ -31,8 +31,12 @@ class AuditsViews:
     def index(self):
         audits = Audit.query.all()
         keys = [key for key in Audit.__dict__ if not key.startswith('_')]
-        
-
         return render_template('user_management/audits/index.html', audits=audits, keys=keys, getattr=getattr)
+
+    def search(self):
+        term = request.args.get('view_name')
+        audits = Audit.query.filter(Audit.view.like(f'%{term}%')).all()
+        keys = [key for key in Audit.__dict__ if not key.startswith('_')]
+        return render_template('user_management/audits/index.html', audits=audits, keys=keys, getattr=getattr, view_name=term)
 
 audits_views = AuditsViews()
