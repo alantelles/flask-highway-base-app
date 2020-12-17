@@ -9,3 +9,4 @@ class Audit(db.Model, TimeStampMixin, SerializeOutput, Desserializer):
     query_string = db.Column(db.String(255))
     body = db.Column(db.Text)
     headers = db.Column(db.Text)
+    description = db.Column(db.String(255))

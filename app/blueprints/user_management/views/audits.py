@@ -1,0 +1,38 @@
+import json
+from flask import render_template, session, request
+from app import db
+from app.blueprints.user_management.models.audit import Audit
+
+def audited(description):
+    def decorator(fn, *args, **kwargs):
+        def wrapper(self, *args, **kwargs):
+            h_dict = {}
+            for k in request.headers:
+                h_dict[k[0].lower()] = request.headers[k[0]]
+
+            audit = Audit(
+                user_id=session['logged_user'], 
+                view=request.endpoint,
+                route=request.path,
+                description=description,
+                query_string=request.query_string.decode(),
+                body=request.get_data().decode(),
+                headers=json.dumps(h_dict)
+            )
+            db.session.add(audit)
+            db.session.commit()
+            return fn(self, *args, **kwargs)
+
+        return wrapper
+
+    return decorator
+
+class AuditsViews:
+    def index(self):
+        audits = Audit.query.all()
+        keys = [key for key in Audit.__dict__ if not key.startswith('_')]
+        
+
+        return render_template('user_management/audits/index.html', audits=audits, keys=keys, getattr=getattr)
+
+audits_views = AuditsViews()

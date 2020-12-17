@@ -1,0 +1,24 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+<h1>Audits</h1>
+<p>This is the audit registers</p>
+
+<table class="table table-responsive">
+    <thead class="thead-dark">
+    <tr>
+        {% for k in keys %}
+        <th>{{ k.capitalize() }}</th>
+        {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for audit in audits %}
+    <tr>
+        {% for k in keys %}
+        <td>{{ getattr(audit, k) }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

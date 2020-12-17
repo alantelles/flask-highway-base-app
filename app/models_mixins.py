@@ -19,7 +19,6 @@ class Desserializer(object):
         body = json.loads(body)
         for key in dict.copy(body):
             if len(self.accept_only):
-                print(key in self.accept_only, key in force_accept)
                 if key not in self.accept_only and key not in force_accept:
                     del body[key]
         
@@ -37,10 +36,6 @@ class Desserializer(object):
         
         for key in body:    
             setattr(self, key, body[key])
-                
-            
-                
-        print(body)
         
 
 class SerializeOutput(object):
@@ -63,7 +58,6 @@ class SerializeOutput(object):
         out = dict.copy(self.__dict__)
         if '_sa_instance_state' in out:
             del out['_sa_instance_state']
-        print(self.forbidden_fields)
         for ff in self.forbidden_fields:
             if ff not in force_fields:
                 if ff in out:

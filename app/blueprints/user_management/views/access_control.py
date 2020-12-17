@@ -14,9 +14,6 @@ def roles_allowed(*role_list):
             
             else:
                 for m in role_list:
-                    print(g.access.roles_names)
-                    print(role_list)
-                    print(m)
                     if m in g.access.roles_names:
                         can_view = True
                         break

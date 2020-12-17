@@ -6,6 +6,7 @@ from app.helpers import register_routes
 #DON'T REMOVE: blueprint views register section
 from app.blueprints.user_management.views.users import users_views
 from app.blueprints.user_management.views.roles import roles_views
+from app.blueprints.user_management.views.audits import audits_views
 #END: blueprint views register section
 
 from app.blueprints.user_management.views.access_control import only_admin
@@ -24,5 +25,5 @@ class UserManagementViews:
 user_management_views = UserManagementViews()
 
 
-register_routes('user_management', user_management_views=user_management_views, users=users_views, roles=roles_views)
+register_routes('user_management', user_management_views=user_management_views, users=users_views, roles=roles_views, audits=audits_views)
     

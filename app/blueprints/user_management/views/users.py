@@ -1,11 +1,10 @@
-import json
 from flask import render_template, request, redirect, url_for, session, flash
 from app.blueprints.user_management.models.user import User
 from app.blueprints.user_management.models.role import Role
-from app.blueprints.user_management.models.audit import Audit
 from app.blueprints.user_management.models.user_role import UserRole
 from app import db
 from app.blueprints.user_management.views.access_control import only_admin, roles_allowed
+from app.blueprints.user_management.views.audits import audited
 
 class UsersViews:
 
@@ -13,30 +12,12 @@ class UsersViews:
     def index(self):
         users = User.query.all()
         return render_template('user_management/users/index.html', users=users)
-        
-    def audits(self):
-      au = Audit.query.all()
-      data = Audit.serialize_list(au)
-      return {'data': data}
-    
+  
     @only_admin
     def show(self, id):
         session['now_viewed'] = id
         user = User.query.filter_by(id=id).first()
-        h_dict = {}
-        for k in request.headers:
-            h_dict[k[0].lower()] = request.headers[k[0]]
-
-        audit = Audit(
-            user_id=user.id, 
-            view=request.endpoint,
-            route=request.path,
-            query_string=request.query_string.decode(),
-            body=request.get_data(),
-            headers=json.dumps(h_dict)
-        )
-        db.session.add(audit)
-        db.session.commit()
+        
         return render_template('user_management/users/show.html', user=user)
 
     @only_admin
@@ -52,19 +33,10 @@ class UsersViews:
         user = User.query.get(id)
         user_roles_ids = [r.role_id for r in user.roles]
         return render_template('user_management/users/edit.html', roles=roles, user=user, user_roles_ids=user_roles_ids)
-
     
-    def protect(self, id):
-        #user = User.query.get(id)
-        body = request.data
-        user = User()
-        user.from_json(body, ["password"])
-        #roles = UserRole.query.filter_by(user_id=user.id).all()
-        #user.user_roles = UserRole.serialize_list(roles)
-        
-        return user.to_json(['password_hash'])
 
     @only_admin
+    @audited('This view updates an user')
     def update(self, id):
         if session.get('now_edited', None) == id:
             user = User.query.get(id)
@@ -80,9 +52,6 @@ class UsersViews:
 
                 roles = db.session.query(Role).filter(Role.id.in_(roles_ids)).all()
                 for r in roles:
-                    print(r)
-                    print(user.roles)
-                    print(r in user.roles)
                     user_roles_ids = [r.role_id for r in user.roles]
                     if r.id not in user_roles_ids:
                         assoc = UserRole()
@@ -101,6 +70,7 @@ class UsersViews:
             return redirect(url_for('user_management.users.index')), 400
 
     @only_admin
+    @audited('This view create a new user')
     def create(self):
         post_data = request.form
         roles_ids = [int(id) for id in request.form.getlist('roles')]
@@ -128,6 +98,7 @@ class UsersViews:
         return redirect(url_for('user_management.users.show', id=user.id))
 
     @only_admin
+    @audited('This view deletes an user')
     def destroy(self, id):
         try:
             if session.get('now_viewed', None) == id:
