@@ -8,6 +8,8 @@ from app import db
 from app.blueprints.user_management.models.user import User
 from app.blueprints.user_management.models.role import Role
 from app.blueprints.user_management.models.user_role import UserRole
+from app.blueprints.user_management.models.audit import Audit
+
 #END: models declare section
 
 try:

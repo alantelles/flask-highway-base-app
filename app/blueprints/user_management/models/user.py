@@ -1,6 +1,7 @@
 from app import db
 from app.models_mixins import TimeStampMixin, SerializeOutput, Desserializer
 from app.blueprints.user_management.models.role import Role
+from app.blueprints.user_management.models.audit import Audit
 from app.blueprints.user_management.models.user_role import UserRole
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -15,6 +16,7 @@ class User(db.Model, TimeStampMixin, SerializeOutput, Desserializer):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255))
     username = db.Column(db.String(255), unique=True)
+    audits = db.relationship('Audit')
     password_hash = db.Column(db.String(255), unique=True)
     roles = db.relationship('UserRole', back_populates='user')
 

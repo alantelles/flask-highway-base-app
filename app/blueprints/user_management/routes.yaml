@@ -4,6 +4,9 @@ root: user_management_views.index
 views:
   users:
     routes:
+      - route: 'audits'
+        name: audits
+        
       - route: 'protect/<id>'
         name: protect
         method: POST

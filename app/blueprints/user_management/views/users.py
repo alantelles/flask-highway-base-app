@@ -1,6 +1,7 @@
 from flask import render_template, request, redirect, url_for, session, flash
 from app.blueprints.user_management.models.user import User
 from app.blueprints.user_management.models.role import Role
+from app.blueprints.user_management.models.audit import Audit
 from app.blueprints.user_management.models.user_role import UserRole
 from app import db
 from app.blueprints.user_management.views.access_control import only_admin, roles_allowed
@@ -11,11 +12,19 @@ class UsersViews:
     def index(self):
         users = User.query.all()
         return render_template('user_management/users/index.html', users=users)
+        
+    def audits(self):
+      au = Audit.query.all()
+      data = Audit.serialize_list(au)
+      return {'data': data}
     
     @only_admin
     def show(self, id):
         session['now_viewed'] = id
         user = User.query.filter_by(id=id).first()
+        audit = Audit(user=user.id, view=request.endpoint)
+        db.session.add(audit)
+        db.session.commit()
         return render_template('user_management/users/show.html', user=user)
 
     @only_admin
