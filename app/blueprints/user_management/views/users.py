@@ -1,3 +1,4 @@
+import json
 from flask import render_template, request, redirect, url_for, session, flash
 from app.blueprints.user_management.models.user import User
 from app.blueprints.user_management.models.role import Role
@@ -22,7 +23,18 @@ class UsersViews:
     def show(self, id):
         session['now_viewed'] = id
         user = User.query.filter_by(id=id).first()
-        audit = Audit(user=user.id, view=request.endpoint)
+        h_dict = {}
+        for k in request.headers:
+            h_dict[k[0].lower()] = request.headers[k[0]]
+
+        audit = Audit(
+            user_id=user.id, 
+            view=request.endpoint,
+            route=request.path,
+            query_string=request.query_string.decode(),
+            body=request.get_data(),
+            headers=json.dumps(h_dict)
+        )
         db.session.add(audit)
         db.session.commit()
         return render_template('user_management/users/show.html', user=user)
