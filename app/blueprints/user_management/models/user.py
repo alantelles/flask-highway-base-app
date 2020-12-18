@@ -1,5 +1,5 @@
 from app import db
-from app.models_mixins import TimeStampMixin, Serializer, Desserializer
+from app.models_mixins import BaseModel
 from app.blueprints.user_management.models.role import Role
 from app.blueprints.user_management.models.audit import Audit
 from app.blueprints.user_management.models.user_role import UserRole
@@ -12,7 +12,7 @@ def to_upper(arg):
 def format_date(arg):
     return arg.strftime("%d/%m/%Y %H:%M:%S")
 
-class User(db.Model, TimeStampMixin, Serializer, Desserializer):
+class User(db.Model,BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255))
     username = db.Column(db.String(255), unique=True)

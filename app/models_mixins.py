@@ -142,5 +142,5 @@ class Serializer(object):
             
         return dump
 
-class BaseModel(db.Model, Serializer, Desserializer):
+class BaseModel(TimeStampMixin, Serializer, Desserializer):
     pass
