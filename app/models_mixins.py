@@ -38,7 +38,7 @@ class Desserializer(object):
             setattr(self, key, body[key])
         
 
-class SerializeOutput(object):
+class Serializer(object):
     # class name should change to 
     # Serializer
 
@@ -85,10 +85,10 @@ class SerializeOutput(object):
                 out.append(entry)
 
             elif type(entry) == list:
-                out.append(SerializeOutput.json_serialize_list(entry))
+                out.append(Serializer.json_serialize_list(entry))
 
             elif type(entry) == dict:
-                out.append(SerializeOutput.json_serialize_dict(entry))
+                out.append(Serializer.json_serialize_dict(entry))
 
             else:
                 out.append(str(entry))
@@ -105,10 +105,10 @@ class SerializeOutput(object):
                 out[entry] = val
 
             elif type(entry) == list:
-                out[entry] = SerializeOutput.json_serialize_list(val)
+                out[entry] = Serializer.json_serialize_list(val)
 
             elif type(entry) == dict:
-                out[entry] = SerializeOutput.json_serialize_dict(val)
+                out[entry] = Serializer.json_serialize_dict(val)
 
             else:
                 out[entry] = str(entry)
@@ -128,10 +128,10 @@ class SerializeOutput(object):
                     dump[key] = val
 
                 elif type(val) == list:
-                    dump[key] = SerializeOutput.json_serialize_list(val)
+                    dump[key] = Serializer.json_serialize_list(val)
                     
                 elif type(val) == dict:
-                    dump[key] = SerializeOutput.json_serialize_dict(val)
+                    dump[key] = Serializer.json_serialize_dict(val)
 
                 else:
                     dump[key] = str(val)
@@ -141,3 +141,6 @@ class SerializeOutput(object):
 
             
         return dump
+
+class BaseModel(db.Model, Serializer, Desserializer):
+    pass

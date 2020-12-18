@@ -1,25 +1,7 @@
-# aliases
-
 root: user_management_views.index
-log_register: true
 
 
 views:
-  pocs:
-    routes:
-      - route: 'see'
-        name: see_this
-        defaults:
-          id: 9999
-
-      - route: 'see/<id>'
-        name: see_this
-      
-
-
-
-    
-      
   audits:
     routes:
       - route: ''
