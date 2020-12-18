@@ -42,16 +42,18 @@ def register_routes(blueprint_name, **views_collections):
                 ns_data = rts[VIEWS_KEYS_NAME][namespace]
 
                 # prefix get
-                ns_prefix = ''
-                if 'prefix' in ns_data:
-                    ns_prefix = sanitize_url(ns_data['prefix'])
+                
+                full_prefix = f'{sani_prefix}{namespace}'
+                if 'url_prefix' in ns_data:
+                    full_prefix = sanitize_url(ns_data['url_prefix']).format(blueprint=blueprint_name, views=namespace)
 
                 # routes register
                 if 'routes' in ns_data:
                     ns_routes = ns_data['routes']
+                    
                     for entry in ns_routes:
                         sani_route = sanitize_url(entry['route'])
-                        route = f'{sani_prefix}{ns_prefix}{namespace}{sani_route}'
+                        route = f'{full_prefix}{sani_route}'
                         route_name = entry['name']
                         route_name = f'{blueprint_name}.{namespace}.{route_name}'
                         action_name = entry['name']
@@ -122,14 +124,9 @@ def register_routes(blueprint_name, **views_collections):
                             methods = ['DELETE']
 
                         sani_route = sanitize_url(res_routes[res])
-                        route = f'{sani_prefix}{ns_prefix}{namespace}{sani_route}'
+                        route = f'{full_prefix}{sani_route}'
 
                         if log_register:
                             print(f'Registering route {route_name} for {route} in {namespace} with methods {methods}')
 
                         app.add_url_rule(route, route_name, view, methods=methods)
-
-
-                    
-                    
-                        
