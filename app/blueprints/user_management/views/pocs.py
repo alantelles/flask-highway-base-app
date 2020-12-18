@@ -1,3 +1,6 @@
+from flask import render_template, redirect, request, url_for, session, flash
+import app.blueprints.user_management.views.access_control as access_control
+
 class PocsViews:
     def index(self):
         return 'returning index'
@@ -17,7 +20,7 @@ class PocsViews:
     def destroy(self, id):
         return f'returning destroy: {id}'
 
-    def edit(self, ic):
+    def edit(self, id):
         return f'returning edit: {id}'
 
 pocs_views = PocsViews()

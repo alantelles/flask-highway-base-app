@@ -65,11 +65,20 @@ def register_routes(blueprint_name, **views_collections):
                         if 'method' in entry:
                             methods = [entry['method']]
                         if log_register:
-                            print(f'Registering route {route_name} for {route} in {namespace}')
+                            print(f'Registering route {route_name} for {route} in {namespace} with methods {methods}')
                         app.add_url_rule(route, route_name, view, methods=methods)
 
                 # resources register
                 if 'resources' in ns_data:
+                    res_routes = {
+                        'index': '',
+                        'new': 'new',
+                        'create': '',
+                        'show': '<int:id>',
+                        'edit': '<int:id>/edit',
+                        'update': '<int:id>',
+                        'destroy': '<int:id>'
+                    }
                     resources = ['index', 'show', 'new', 'edit', 'create', 'update', 'destroy']
                     ns_res = ns_data['resources']
                     no_resources_mod = len(ns_res.keys()) == 0
@@ -99,25 +108,25 @@ def register_routes(blueprint_name, **views_collections):
                         action_name = res
                         view_coll = dict_views[namespace]
                         view = getattr(view_coll, action_name)
-
-                        mod_res = res
-                        if res in ['show', 'edit', 'update', 'destroy']:
-                            mod_res = f'{res}/<int:id>'
-
+                        
                         if res in ['index', 'new', 'show', 'edit']:
                             methods = ['GET']
 
-                        elif res in ['create', 'update']:
+                        elif res == 'create':
                             methods = ['POST']
 
-                        elif res in ['destroy']:
+                        elif res == 'update':
+                            methods = ['PUT', 'PATCH', 'POST']
+
+                        elif res == 'destroy':
                             methods = ['DELETE']
 
-                        sani_route = sanitize_url(mod_res)
+                        sani_route = sanitize_url(res_routes[res])
                         route = f'{sani_prefix}{ns_prefix}{namespace}{sani_route}'
 
                         if log_register:
-                            print(f'Registering route {route_name} for {route} in {namespace}')
+                            print(f'Registering route {route_name} for {route} in {namespace} with methods {methods}')
+
                         app.add_url_rule(route, route_name, view, methods=methods)
 
 

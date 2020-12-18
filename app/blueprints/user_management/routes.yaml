@@ -60,17 +60,17 @@ views:
       - route: 'new'
         name: new
 
-      - route: 'new'
+      - route: ''
         name: create
         method: POST
 
-      - route: 'edit/<id>'
+      - route: '<id>/edit'
         name: edit
 
-      - route: 'edit/<id>'
+      - route: '<id>'
         name: update
         method: POST
 
-      - route: 'destroy/<id>'
+      - route: '<id>'
         name: destroy
         method: DELETE

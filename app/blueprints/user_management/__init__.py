@@ -4,10 +4,10 @@ from flask import Blueprint, render_template, request
 from app.helpers import register_routes
 
 #DON'T REMOVE: blueprint views register section
+from app.blueprints.user_management.views.pocs import pocs_views
 from app.blueprints.user_management.views.users import users_views
 from app.blueprints.user_management.views.roles import roles_views
 from app.blueprints.user_management.views.audits import audits_views
-from app.blueprints.user_management.views.pocs import pocs_views
 #END: blueprint views register section
 
 from app.blueprints.user_management.views.access_control import only_admin
@@ -25,6 +25,6 @@ class UserManagementViews:
 
 user_management_views = UserManagementViews()
 
-
+#DON'T TOUCH: register routes section
 register_routes('user_management', user_management_views=user_management_views, users=users_views, roles=roles_views, audits=audits_views, pocs=pocs_views)
-    
+#END: register routes section
