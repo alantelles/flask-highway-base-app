@@ -6,9 +6,15 @@ log_register: true
 
 views:
   pocs:
-    resources:
-      new: 'novo'
-      edit: 'editar'
+    routes:
+      - route: 'see'
+        name: see_this
+        defaults:
+          id: 9999
+
+      - route: 'see/<id>'
+        name: see_this
+      
 
 
 
@@ -37,6 +43,7 @@ views:
         name: show
         view: show
         method: GET
+    
 
       - route: 'new'
         name: new

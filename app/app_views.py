@@ -28,7 +28,8 @@ class App:
             urls.append({
                 'route': r.rule,
                 'methods': list(r.methods),
-                'view': r.endpoint
+                'view': r.endpoint,
+                'defaults': r.defaults
             })
 
         return {'urls': urls}

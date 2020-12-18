@@ -23,4 +23,7 @@ class PocsViews:
     def edit(self, id):
         return f'returning edit: {id}'
 
+    def see_this(self, id):
+        return f'returnin see: {id}'
+
 pocs_views = PocsViews()

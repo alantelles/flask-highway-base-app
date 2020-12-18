@@ -68,7 +68,10 @@ def register_routes(blueprint_name, **views_collections):
                             methods = [entry['method']]
                         if log_register:
                             print(f'Registering route {route_name} for {route} in {namespace} with methods {methods}'.replace('//', '/'))
-                        app.add_url_rule(route, route_name, view, methods=methods)
+                        defaults = None
+                        if 'defaults' in entry:
+                            defaults = entry['defaults']
+                        app.add_url_rule(route, route_name, view, methods=methods, defaults=defaults)
 
                 # resources register
                 if 'resources' in ns_data:
