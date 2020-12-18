@@ -22,6 +22,18 @@ class App:
     def login_try(self):
         return try_login_user(request.form)
 
+    def site_map(self):
+        urls = []
+        for r in app.url_map.iter_rules():
+            urls.append({
+                'route': r.rule,
+                'methods': list(r.methods),
+                'view': r.endpoint
+            })
+
+        return {'urls': urls}
+        
+
     @must_be_logged
     def logout(self):
         return logout_user()
@@ -32,3 +44,4 @@ app.add_url_rule('/', 'index', app_views.index)
 app.add_url_rule('/login', 'login', app_views.login, methods=['GET'])
 app.add_url_rule('/login', 'login_try', app_views.login_try, methods=['POST'])
 app.add_url_rule('/logout', 'logout', app_views.logout, methods=['GET', 'POST'])
+app.add_url_rule('/site_map', 'site_map', app_views.site_map, methods=['GET'])

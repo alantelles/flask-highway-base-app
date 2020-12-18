@@ -6,12 +6,10 @@ log_register: true
 
 views:
   pocs:
-    url_prefix: 'user_management/pocs/maromba'
     resources:
-      only:
-        - new
-        - show
-        - index
+      new: 'novo'
+      edit: 'editar'
+
 
 
     

@@ -86,7 +86,12 @@ def register_routes(blueprint_name, **views_collections):
                     no_resources_mod = len(ns_res.keys()) == 0
                     if not no_resources_mod:
                         will_create = []
-                        
+                        if 'new' in ns_res:
+                            res_routes['new'] = ns_res['new']
+
+                        if 'edit' in ns_res:
+                            res_routes['edit'] = '<int:id>/{}'.format(ns_res['edit'])
+
                         if 'only' in ns_res:
                             for opt in ns_res['only']:
                                 if opt in resources:
