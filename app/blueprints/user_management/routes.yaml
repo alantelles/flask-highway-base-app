@@ -1,5 +1,4 @@
 # aliases
-bp_name: &bp_name user_management
 
 root: user_management_views.index
 log_register: true
@@ -7,7 +6,7 @@ log_register: true
 
 views:
   pocs:
-    url_prefix: '{blueprint}/{views}/maromba'
+    url_prefix: 'user_management/pocs/maromba'
     resources:
       only:
         - new

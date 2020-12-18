@@ -45,7 +45,7 @@ def register_routes(blueprint_name, **views_collections):
                 
                 full_prefix = f'{sani_prefix}{namespace}'
                 if 'url_prefix' in ns_data:
-                    full_prefix = sanitize_url(ns_data['url_prefix']).format(blueprint=blueprint_name, views=namespace)
+                    full_prefix = sanitize_url(ns_data['url_prefix'])
 
                 # routes register
                 if 'routes' in ns_data:
@@ -67,7 +67,7 @@ def register_routes(blueprint_name, **views_collections):
                         if 'method' in entry:
                             methods = [entry['method']]
                         if log_register:
-                            print(f'Registering route {route_name} for {route} in {namespace} with methods {methods}')
+                            print(f'Registering route {route_name} for {route} in {namespace} with methods {methods}'.replace('//', '/'))
                         app.add_url_rule(route, route_name, view, methods=methods)
 
                 # resources register
@@ -127,6 +127,6 @@ def register_routes(blueprint_name, **views_collections):
                         route = f'{full_prefix}{sani_route}'
 
                         if log_register:
-                            print(f'Registering route {route_name} for {route} in {namespace} with methods {methods}')
+                            print(f'Registering route {route_name} for {route} in {namespace} with methods {methods}'.replace('//', '/'))
 
                         app.add_url_rule(route, route_name, view, methods=methods)
