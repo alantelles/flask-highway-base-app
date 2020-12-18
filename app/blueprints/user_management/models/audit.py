@@ -1,7 +1,7 @@
 from app import db
-from app.models_mixins import TimeStampMixin, Serializer, Desserializer
+from app.models_mixins import BaseModel
 
-class Audit(db.Model, TimeStampMixin, Serializer, Desserializer):
+class Audit(db.Model, BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     view = db.Column(db.String(255))
