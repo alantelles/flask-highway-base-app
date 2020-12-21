@@ -9,6 +9,14 @@ views:
 
       - route: 'search'
         name: search
+        
+  tokens:
+    url_prefix: 'tokens'
+    routes:
+      - route: ''
+        name: index
+      - route: 'create'
+        name: create
 
   users:
     routes:
