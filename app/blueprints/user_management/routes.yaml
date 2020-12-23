@@ -15,6 +15,9 @@ views:
   tokens:
     url_prefix: 'tokens'
     routes:
+      - route: 'revoke_all'
+        name: revoke_all
+
       - route: 'authorize'
         name: authorize
         method: POST

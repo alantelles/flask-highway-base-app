@@ -1,4 +1,10 @@
-POST http://localhost:5000/tokens/auth/
+@url = http://localhost:5000/tokens
+POST {{url}}/auth/
 Content-Type: application/json
 
 {"username": "admin", "password": "admin123"}
+
+POST {{url}}/authorize
+Content-Type: application/json
+Authorization: Bearer Z3LySwDS3dUzip34brZkIPjcmQtn-nYLhzKMiyw0a25CbjsIHBxCTmu1ZHKEiVrr095wf8KkN4VHoQau12vCzw
+

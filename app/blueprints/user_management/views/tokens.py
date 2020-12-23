@@ -9,6 +9,11 @@ class TokensViews():
         tokens = Token.query.all()
         tks = Token.serialize_list(tokens)
         return {'data': tks}
+
+    def revoke_all(self):
+        dels = Token.revoke_all()
+        db.session.commit()
+        return {'deleted': dels}
         
     def create(self, user_id):
         token = Token()

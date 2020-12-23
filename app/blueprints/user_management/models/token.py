@@ -11,6 +11,10 @@ class Token(db.Model, BaseModel):
     access_time = db.Column(db.Integer) # in minutes
     refresh_time = db.Column(db.Integer) # in days
     access = db.Column(db.String(255))
+
+    def revoke_all():
+        dels = Token.query.delete()
+        return dels
     
     def validate(self, code):        
         found = Token.query.filter_by(access=code).first()
