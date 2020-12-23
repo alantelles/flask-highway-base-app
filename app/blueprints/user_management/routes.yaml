@@ -9,14 +9,25 @@ views:
 
       - route: 'search'
         name: search
+
+      
         
   tokens:
     url_prefix: 'tokens'
     routes:
+      - route: 'auth'
+        name: auth
+        method: POST
+
       - route: ''
         name: index
+
       - route: 'create'
         name: create
+
+      - route: 'refresh'
+        name: refresh
+        method: POST
 
   users:
     routes:
