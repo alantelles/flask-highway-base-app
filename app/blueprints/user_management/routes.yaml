@@ -15,10 +15,14 @@ views:
   tokens:
     url_prefix: 'tokens'
     routes:
-      - route: 'auth'
-        name: auth
+      - route: 'authorize'
+        name: authorize
         method: POST
 
+      - route: 'auth'
+        name: authenticate
+        method: POST
+      
       - route: ''
         name: index
 
@@ -31,6 +35,8 @@ views:
 
   users:
     routes:
+      
+
       - route: ''
         # all names will be prefixed with blueprint name by default
         # this route real name will be user_management.users.index

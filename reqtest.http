@@ -1,0 +1,4 @@
+POST http://localhost:5000/tokens/auth/
+Content-Type: application/json
+
+{"username": "admin", "password": "admin123"}

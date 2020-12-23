@@ -12,8 +12,7 @@ class Token(db.Model, BaseModel):
     refresh_time = db.Column(db.Integer) # in days
     access = db.Column(db.String(255))
     
-    def validate(self, code):
-        
+    def validate(self, code):        
         found = Token.query.filter_by(access=code).first()
         if found:
             now = datetime.now()

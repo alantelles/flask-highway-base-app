@@ -81,15 +81,11 @@ class UsersViews:
             )
         if len(roles_ids):
             roles = db.session.query(Role).filter(Role.id.in_(roles_ids)).all()
-            
-            
             for r in roles:
                 assoc = UserRole()
                 assoc.role = r
                 user.roles.append(assoc)
                 db.session.add(assoc)
-
-            
 
         else:
             db.session.add(user)

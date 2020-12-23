@@ -22,16 +22,23 @@ class User(db.Model,BaseModel):
 
     forbidden_fields = ['password_hash']
     remap = {'user_roles': 'roles'}
-    process_key = {
-        'name': to_upper,
-        'created_at': format_date
-    }
     
-    accept_only = ['name', 'username']
-    
+    accept_only = ['name', 'username']    
     process_input_key = {'password_hash': generate_password_hash}
     remap_input = {'password': 'password_hash'}
+
     
+    def authenticate(username, password):
+        user = User.query.filter_by(username=username).first()
+        if user:
+            if check_password_hash(user.password_hash, password):
+                return user
+
+            else:
+                return None
+
+        else:
+            return None
 
     def set_password(pw):
         return generate_password_hash(pw)
