@@ -2,6 +2,7 @@ import json
 from flask import render_template, session, request
 from app import db
 from app.blueprints.user_management.models.audit import Audit
+from app.blueprints.user_management.models.token import Token
 
 def audited(description):
     def decorator(fn, *args, **kwargs):
@@ -10,8 +11,16 @@ def audited(description):
             for k in request.headers:
                 h_dict[k[0].lower()] = request.headers[k[0]]
 
+            user_id = session.get('logged_user', None)
+            authorization = request.headers.get('Authorization', None)
+            if authorization:
+                token_str = authorization.replace('Bearer ', '').strip()
+                user_id = Token.find_user(token_str)
+
+
             audit = Audit(
-                user_id=session['logged_user'], 
+                user_id=user_id, 
+                authorization=authorization,
                 view=request.endpoint,
                 route=request.path,
                 description=description,

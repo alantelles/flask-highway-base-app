@@ -1,5 +1,5 @@
 from app import db
-from app.dont_touch.models_mixins import BaseModel
+from dont_touch.models_mixins import BaseModel
 from app.blueprints.user_management.models.role import Role
 from app.blueprints.user_management.models.audit import Audit
 from app.blueprints.user_management.models.user_role import UserRole

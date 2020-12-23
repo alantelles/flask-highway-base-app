@@ -1,7 +1,7 @@
 import os
 from flask import Blueprint, render_template, request
 
-from app.dont_touch.helpers.routes import register_routes
+from dont_touch.helpers.routes import register_routes
 
 #DON'T REMOVE: blueprint views register section
 from app.blueprints.user_management.views.tokens import tokens_views

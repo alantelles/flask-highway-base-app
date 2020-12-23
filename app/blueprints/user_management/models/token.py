@@ -2,7 +2,7 @@ from app import db
 import secrets as sc
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
-from app.dont_touch.models_mixins import BaseModel
+from dont_touch.models_mixins import BaseModel
 
 class Token(db.Model, BaseModel):
     id = db.Column(db.Integer, primary_key=True)
@@ -16,6 +16,14 @@ class Token(db.Model, BaseModel):
         dels = Token.query.delete()
         return dels
     
+    def find_user(token_str):
+        token = Token.query.filter_by(access=token_str).first()
+        if not token:
+            token = Token.query.filter_by(refresh_token=token_str).first()
+
+        if token:
+            return token.user_id
+
     def validate(self, code):        
         found = Token.query.filter_by(access=code).first()
         if found:
