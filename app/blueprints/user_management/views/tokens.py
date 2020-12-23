@@ -22,6 +22,13 @@ class TokensViews():
         db.session.commit()
         return 'token created'
 
+    def get_user_data(user):
+        roles_ids = [r.role_id for r in user.roles]
+        user_roles = db.session.query(Role).filter(Role.id.in_(roles_ids)).all()
+        user_roles = Role.serialize_list(user_roles)
+        user.user_roles = [r['name'] for r in user_roles]
+        return user
+
     def authenticate(self):
         # only accepts JSON
         body =  request.get_json()
@@ -31,24 +38,36 @@ class TokensViews():
             token.create()
             db.session.add(token)
             db.session.commit()
-            roles_ids = [r.role_id for r in user.roles]
-            user_roles = db.session.query(Role).filter(Role.id.in_(roles_ids)).all()
-            user_roles = Role.serialize_list(user_roles)
-            user.user_roles = [r['name'] for r in user_roles]
+            user_retrieved = TokensViews.get_user_data(user)
+
             return {
                 'access_token': token.access,
                 'refresh_token': token.refresh_token,
                 'access_token_expires_in_minutes': token.access_time,
                 'refresh_token_expires_in_days': token.refresh_time,
-                'user': user.to_json()
+                'user': user_retrieved.to_json()
             }
 
     def authorize(self):
         token_try = request.headers.get('Authorization')
-        token_try = token_try.replace('Bearer ', '')
+        token_try = token_try.replace('Bearer ', '').strip()
         token = Token()
         found = token.validate(token_try)
-        return f'Token {token_try} authenticated? {found}'
+        if found:
+            user = User.query.filter_by(id=found.user_id).first()
+            if user:
+                user_retrieved = TokensViews.get_user_data(user)
+                return {
+                    'message': 'Valid token. Access granted',
+                    'user': user_retrieved.to_json()
+                }, 200
+
+            else:
+                return {'message': 'Your token seems valid, but the associated user has no access anymore'}, 403
+
+        else:
+            return {'message': 'Invalid token. Try refreshing or authenticate again.'}, 403
+        
 
     def refresh(self):
         token_try = request.headers.get('Authorization')

@@ -23,7 +23,7 @@ class Token(db.Model, BaseModel):
             elapsed = now - found.created_at
             elapsed_min = elapsed.seconds / 60
             if elapsed_min < found.access_time:
-                return True
+                return found
                 
             else:
                 return False
