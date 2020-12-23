@@ -1,5 +1,6 @@
 from app import db
 from flask import request
+from app.blueprints.user_management.views.audits import audited
 from app.blueprints.user_management.models.token import Token
 from app.blueprints.user_management.models.user import User
 from app.blueprints.user_management.models.role import Role
@@ -10,18 +11,15 @@ class TokensViews():
         tks = Token.serialize_list(tokens)
         return {'data': tks}
 
+    @audited('This view revokes all tokens')
     def revoke_all(self):
+        # temporary code for tests purpose
+        # should be decorated
         dels = Token.revoke_all()
         db.session.commit()
         return {'deleted': dels}
         
-    def create(self, user_id):
-        token = Token()
-        token.create()
-        db.session.add(token)
-        db.session.commit()
-        return 'token created'
-
+    
     def get_user_data(user):
         roles_ids = [r.role_id for r in user.roles]
         user_roles = db.session.query(Role).filter(Role.id.in_(roles_ids)).all()
@@ -29,6 +27,7 @@ class TokensViews():
         user.user_roles = [r['name'] for r in user_roles]
         return user
 
+    @audited('This view authenticates an user and creates an access token')
     def authenticate(self):
         # only accepts JSON
         body =  request.get_json()
@@ -51,6 +50,7 @@ class TokensViews():
         else:
             return {'message': 'Invalid credentials'}, 401
 
+    @audited('This view authorizes an user with a valid token previously registered')
     def authorize(self):
         token_try = request.headers.get('Authorization')
         token_try = token_try.replace('Bearer ', '').strip()
@@ -71,7 +71,7 @@ class TokensViews():
         else:
             return {'message': 'Invalid token. Try refreshing or authenticate again.'}, 401
         
-
+    @audited('This view refreshes an access token for a given refresh token')
     def refresh(self):
         token_try = request.headers.get('Authorization')
         token_try = token_try.replace('Bearer ', '')

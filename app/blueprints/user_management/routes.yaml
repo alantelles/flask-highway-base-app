@@ -34,9 +34,6 @@ views:
       - route: ''
         name: index
 
-      - route: 'create'
-        name: create
-
       - route: 'refresh'
         name: refresh
         method: POST
