@@ -20,9 +20,15 @@ class Token(db.Model, BaseModel):
         found = Token.query.filter_by(access=code).first()
         if found:
             now = datetime.now()
-            elapsed = now - found.created_at
+            if not found.updated_at:
+                ref_time = found.created_at
+
+            else:
+                ref_time = found.updated_at
+
+            elapsed = now - ref_time
             elapsed_min = elapsed.seconds / 60
-            if elapsed_min < found.access_time:
+            if elapsed_min <= found.access_time:
                 return found
                 
             else:
@@ -32,9 +38,9 @@ class Token(db.Model, BaseModel):
             
     def refresh(self, code):
         now = datetime.now()
-        elapsed = now - found.created_at
+        elapsed = now - self.created_at
 
-        if elapsed.days < found.refresh_time:
+        if elapsed.days <= self.refresh_time:
             self.access = sc.token_urlsafe(64)
             return True
 

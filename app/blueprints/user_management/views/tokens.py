@@ -48,6 +48,9 @@ class TokensViews():
                 'user': user_retrieved.to_json()
             }
 
+        else:
+            return {'message': 'Invalid credentials'}, 401
+
     def authorize(self):
         token_try = request.headers.get('Authorization')
         token_try = token_try.replace('Bearer ', '').strip()
@@ -63,20 +66,27 @@ class TokensViews():
                 }, 200
 
             else:
-                return {'message': 'Your token seems valid, but the associated user has no access anymore'}, 403
+                return {'message': 'Your token seems valid, but the associated user has no access anymore'}, 401
 
         else:
-            return {'message': 'Invalid token. Try refreshing or authenticate again.'}, 403
+            return {'message': 'Invalid token. Try refreshing or authenticate again.'}, 401
         
 
     def refresh(self):
         token_try = request.headers.get('Authorization')
         token_try = token_try.replace('Bearer ', '')
         token = Token.query.filter_by(refresh_token=token_try).first()
-        if token.refresh():
-            db.session.commit()
+        if token:
+            if token.refresh(token_try):
+                db.session.commit()
+                return {
+                    'access_token': token.access,
+                    'refresh_token': token.refresh_token,
+                    'access_token_expires_in_minutes': token.access_time,
+                    'refresh_token_expires_in_days': token.refresh_time
+                }
         
-        return f'Token {token_try} renewed? {token}'
+        return {'message': 'Invalid refresh token'}, 401
         
 
         

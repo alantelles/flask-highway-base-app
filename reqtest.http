@@ -1,12 +1,21 @@
 @url = http://localhost:5000/tokens
+@token = _jUxwxb-ufdy8_uNvBSITqCI6nfDFSS2YD5fpOcjx42qIFncYlmf6g8fQ7yn3y2H2M-LfC8QwaU0RifXBTgeTg
+@ref = apjKM0-snyMY8cPWkC0OQyqd8eyxkZgplf_3w7D-QjIArFrcG0GrJ2kVmqDI7beATm88cGuE413XOw_A40_4YA
 
 POST {{url}}/auth/
 Content-Type: application/json
 
-{"username": "linotelles", "password": "123123"}
+{"username": "admin", "password": "admin123"}
 
 ###
 POST {{url}}/authorize/
 Content-Type: application/json
-Authorization: Bearer Z3LySwDS3dUzip34brZkIPjcmQtn-nYLhzKMiyw0a25CbjsIHBxCTmu1ZHKEiVrr095wf8KkN4VHoQau12vCzw
+Authorization: Bearer {{token}}
 
+###
+POST {{url}}/refresh/
+Content-Type: application/json
+Authorization: Bearer {{ref}}
+
+###
+DELETE {{url}}/revoke_all/

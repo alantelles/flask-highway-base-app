@@ -17,9 +17,14 @@ views:
     routes:
       - route: 'revoke_all'
         name: revoke_all
+        method: DELETE
 
       - route: 'authorize'
         name: authorize
+        method: POST
+
+      - route: 'refresh'
+        name: refresh
         method: POST
 
       - route: 'auth'
