@@ -42,6 +42,7 @@ class DefaultViews(BaseViews):
 
 default_views = DefaultViews()
 
+
 app.add_url_rule('/', 'index', default_views.index)
 app.add_url_rule('/login', 'login', default_views.login, methods=['GET'])
 app.add_url_rule('/login', 'login_try', default_views.login_try, methods=['POST'])

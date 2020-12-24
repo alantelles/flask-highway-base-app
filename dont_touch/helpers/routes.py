@@ -65,7 +65,7 @@ def register_routes(blueprint_name, **views_collections):
 
                         methods = ['GET']
                         if 'method' in entry:
-                            methods = [entry['method']]
+                            methods = [entry['method'].upper()]
                         if log_register:
                             print(f'Registering route {route_name} for {route} in {namespace} with methods {methods}'.replace('//', '/'))
                         defaults = None
