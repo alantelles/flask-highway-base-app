@@ -1,11 +1,12 @@
 import traceback
 from flask import render_template, redirect, request, url_for, session, flash
 from app import db
+from app.views.base_views import BaseViews
 from app.blueprints.user_management.models.role import Role
 from app.blueprints.user_management.models.user_role import UserRole
 from app.blueprints.user_management.views.access_control import only_admin
 
-class RolesViews:
+class RolesViews(BaseViews):
     @only_admin
     def index(self):
         roles = Role.query.all()

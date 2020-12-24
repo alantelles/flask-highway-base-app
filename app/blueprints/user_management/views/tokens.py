@@ -1,11 +1,12 @@
 from app import db
 from flask import request
+from app.views.base_views import BaseViews
 from app.blueprints.user_management.views.audits import audited
 from app.blueprints.user_management.models.token import Token
 from app.blueprints.user_management.models.user import User
 from app.blueprints.user_management.models.role import Role
 
-class TokensViews():
+class TokensViews(BaseViews):
     def index(self):
         tokens = Token.query.all()
         tks = Token.serialize_list(tokens)

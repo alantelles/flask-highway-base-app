@@ -2,6 +2,7 @@ import os
 from flask import Blueprint, render_template, request
 
 from dont_touch.helpers.routes import register_routes
+from app.views.base_views import BaseViews
 
 #DON'T REMOVE: blueprint views register section
 from app.blueprints.user_management.views.tokens import tokens_views
@@ -16,7 +17,7 @@ user_management = Blueprint('user_management', __name__, template_folder='templa
 user_management_path = os.path.join(os.getcwd(), 'app', 'blueprints', 'user_management')
 
 
-class UserManagementViews:
+class UserManagementViews(BaseViews):
     @only_admin
     def index(self):
         controllers_list = os.listdir(os.path.join(os.getcwd(), 'app', 'blueprints', 'user_management', 'views'))

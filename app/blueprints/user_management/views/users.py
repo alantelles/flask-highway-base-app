@@ -3,10 +3,11 @@ from app.blueprints.user_management.models.user import User
 from app.blueprints.user_management.models.role import Role
 from app.blueprints.user_management.models.user_role import UserRole
 from app import db
+from app.views.base_views import BaseViews
 from app.blueprints.user_management.views.access_control import only_admin, roles_allowed
 from app.blueprints.user_management.views.audits import audited
 
-class UsersViews:
+class UsersViews(BaseViews):
 
     @only_admin
     def index(self):

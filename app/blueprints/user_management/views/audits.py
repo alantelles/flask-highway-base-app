@@ -1,6 +1,7 @@
 import json
 from flask import render_template, session, request
 from app import db
+from app.views.base_views import BaseViews
 from app.blueprints.user_management.models.audit import Audit
 from app.blueprints.user_management.models.token import Token
 
@@ -36,7 +37,7 @@ def audited(description):
 
     return decorator
 
-class AuditsViews:
+class AuditsViews(BaseViews):
     def index(self):
         audits = Audit.query.all()
         keys = [key for key in Audit.__dict__ if not key.startswith('_')]

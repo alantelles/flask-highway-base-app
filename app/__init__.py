@@ -9,7 +9,7 @@ from app import config
 
 db = SQLAlchemy(app)
 
-from app import app_views 
+from app.views.default_views import default_views
 
 
 

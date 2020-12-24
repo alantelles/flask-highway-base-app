@@ -1,5 +1,6 @@
 from flask import request, session, redirect, url_for, flash, g
 from app import app
+from app.views.base_views import BaseViews
 from app.blueprints.user_management.models.user import User
 from app.blueprints.user_management.models.user_role import UserRole
 
@@ -76,7 +77,7 @@ def logout_user():
     flash('You were logged out', 'info')
     return redirect(url_for('login'))
 
-class AccessController:
+class AccessController(BaseViews):
     def __init__(self):
         self.is_anonymous = True
         self.is_admin = None
