@@ -6,6 +6,7 @@ from app.views.base_views import BaseViews
 from app import app
 from app.blueprints.user_management.views.access_control import try_login_user, logout_user, must_be_logged
 
+
 class DefaultViews(BaseViews):
     @must_be_logged
     def index(self):
@@ -41,7 +42,6 @@ class DefaultViews(BaseViews):
         return logout_user()
 
 default_views = DefaultViews()
-
 
 app.add_url_rule('/', 'index', default_views.index)
 app.add_url_rule('/login', 'login', default_views.login, methods=['GET'])

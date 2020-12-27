@@ -6,6 +6,7 @@ from app import db
 from app.views.base_views import BaseViews
 from app.blueprints.user_management.views.access_control import only_admin, roles_allowed
 from app.blueprints.user_management.views.audits import audited
+from dont_touch.core_views import render
 
 class UsersViews(BaseViews):
 
@@ -20,6 +21,17 @@ class UsersViews(BaseViews):
         user = User.query.filter_by(id=id).first()
         
         return render_template('user_management/users/show.html', user=user)
+
+    @render
+    def other(self, id):
+        session['now_viewed'] = id
+        if id == 1:
+            self.bahol = {'zika': 'param0', 'tika': 'param2'}
+            self.user = User.query.filter_by(id=id).first()
+
+        else:
+            flash('usuário nao existe', 'info')
+            return redirect(url_for('index'))
 
     @only_admin
     def new(self):

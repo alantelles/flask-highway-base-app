@@ -1,5 +1,5 @@
 root: user_management_views.index
-log_register: true
+log_register: false
 
 
 views:
@@ -42,6 +42,8 @@ views:
   users:
     routes:
       
+      - route: 'other/<int:id>'
+        name: other
 
       - route: ''
         # all names will be prefixed with blueprint name by default

@@ -19,7 +19,7 @@ def register_routes(blueprint_name, **views_collections):
         rts = yaml.load(routes, Loader=yaml.FullLoader)
         log_register = False
         if 'log_register' in rts:
-            log_register = True
+            log_register = rts['log_register']
         prefix = blueprint_name
         if 'url_prefix' in rts:
             prefix = rts['url_prefix']

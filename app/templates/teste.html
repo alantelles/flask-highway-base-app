@@ -1,0 +1,21 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+<h1>{{ config.project_name }}</h1>
+<p>Hi-Speed development flask CLI</p>
+<br>
+<h3>Welcome, {{ access.user.name }}</h3>
+<h2>Este é um teste</h2>
+<div class="card">
+    <div class="card-header"><h4>Your permissions</h4></div>
+    <div class="card-body">
+        <ul>
+            {% for rn in access.roles_names %}
+                <li>{{ rn }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+    
+    
+
+{% endblock %}
