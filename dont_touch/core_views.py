@@ -17,5 +17,13 @@ def render(fn):
     return wrapper
 
 
+
 class CoreViews:
-    pass
+    def render(self, path):
+        dump = self.__dict__
+        obj = str(self)
+        obj = obj[1:obj.rfind('.')].split('.')
+        local = [obj[2], obj[4]]
+        path = path.split(os.path.sep)
+        
+        return render_template(os.path.join('user_management', 'roles','index.html'), **dump)

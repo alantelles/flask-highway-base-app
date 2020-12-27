@@ -9,9 +9,9 @@ from app.blueprints.user_management.views.access_control import only_admin
 class RolesViews(BaseViews):
     @only_admin
     def index(self):
-        roles = Role.query.all()
-        
-        return render_template('user_management/roles/index.html', roles=roles)
+        self.roles = Role.query.all()
+        return self.render('index')
+        # return render_template('user_management/roles/index.html', roles=roles)
 
     @only_admin
     def create(self):
