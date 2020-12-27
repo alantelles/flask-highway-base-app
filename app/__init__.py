@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -10,8 +10,6 @@ from app import config
 db = SQLAlchemy(app)
 
 from app.views.default_views import default_views
-
-
 
 #DON'T REMOVE: blueprints register section
 from app.blueprints.user_management import user_management

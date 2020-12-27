@@ -41,9 +41,6 @@ views:
 
   users:
     routes:
-      
-      - route: 'other/<int:id>'
-        name: other
 
       - route: ''
         # all names will be prefixed with blueprint name by default

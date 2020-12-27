@@ -10,42 +10,31 @@ from dont_touch.core_views import render
 
 class UsersViews(BaseViews):
 
+    @render
     @only_admin
     def index(self):
-        users = User.query.all()
-        return render_template('user_management/users/index.html', users=users)
-  
+        self.users = User.query.all()
+
+    @render
     @only_admin
     def show(self, id):
         session['now_viewed'] = id
-        user = User.query.filter_by(id=id).first()
+        self.user = User.query.filter_by(id=id).first()
         
-        return render_template('user_management/users/show.html', user=user)
-
     @render
-    def other(self, id):
-        session['now_viewed'] = id
-        if id == 1:
-            self.bahol = {'zika': 'param0', 'tika': 'param2'}
-            self.user = User.query.filter_by(id=id).first()
-
-        else:
-            flash('usuário nao existe', 'info')
-            return redirect(url_for('index'))
-
     @only_admin
     def new(self):
         roles = Role.query.all()
-        user = User(username='', name='')
-        return render_template('user_management/users/new.html', roles=roles, user=user)
+        self.user = User(username='', name='')
    
+    @render
     @only_admin
     def edit(self, id):
         session['now_edited'] = id
-        roles = Role.query.all()
-        user = User.query.get(id)
-        user_roles_ids = [r.role_id for r in user.roles]
-        return render_template('user_management/users/edit.html', roles=roles, user=user, user_roles_ids=user_roles_ids)
+        self.roles = Role.query.all()
+        self.user = User.query.get(id)
+        self.user_roles_ids = [r.role_id for r in self.user.roles]
+        # return render_template('user_management/users/edit.html', roles=roles, user=user, user_roles_ids=user_roles_ids)
     
 
     @only_admin
