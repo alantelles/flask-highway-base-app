@@ -19,11 +19,24 @@ def render(fn):
 
 
 class CoreViews:
-    def render(self, path):
+    def render(self, path, flask_lookup=False):
         dump = self.__dict__
-        obj = str(self)
-        obj = obj[1:obj.rfind('.')].split('.')
-        local = [obj[2], obj[4]]
-        path = path.split(os.path.sep)
-        
-        return render_template(os.path.join('user_management', 'roles','index.html'), **dump)
+        path += '.html'
+        if not flask_lookup:
+            obj = str(self)
+            obj = obj[1:obj.rfind('.')].split('.')
+            
+            path = path.split('/')
+            if len(path) == 1:
+                to_render = '/'.join([obj[2], obj[4], path[0]])
+
+            elif len(path) == 2:
+                to_render = '/'.join([obj[2], path[0], path[1]])
+
+            else:
+                to_render = '/'.join(path)
+
+        else:
+            to_render = path
+
+        return render_template(to_render, **dump)

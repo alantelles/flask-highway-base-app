@@ -3,15 +3,18 @@ from flask import render_template, redirect, request, url_for, session, flash
 from app import db
 from app.views.base_views import BaseViews
 from app.blueprints.user_management.models.role import Role
+from app.blueprints.user_management.models.audit import Audit
 from app.blueprints.user_management.models.user_role import UserRole
 from app.blueprints.user_management.views.access_control import only_admin
 
+from dont_touch.core_views import render
+
 class RolesViews(BaseViews):
+    
     @only_admin
     def index(self):
         self.roles = Role.query.all()
         return self.render('index')
-        # return render_template('user_management/roles/index.html', roles=roles)
 
     @only_admin
     def create(self):
@@ -23,7 +26,7 @@ class RolesViews(BaseViews):
 
     @only_admin
     def new(self):
-        return render_template('user_management/roles/new.html')
+        return self.render('new')
 
     @only_admin
     def show(self, id):
