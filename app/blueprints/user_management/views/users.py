@@ -24,7 +24,7 @@ class UsersViews(BaseViews):
     @render
     @only_admin
     def new(self):
-        roles = Role.query.all()
+        self.roles = Role.query.all()
         self.user = User(username='', name='')
    
     @render

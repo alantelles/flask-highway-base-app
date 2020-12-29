@@ -2,7 +2,7 @@ from app import db
 import secrets as sc
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
-from dont_touch.models_mixins import BaseModel
+from app.base_model import BaseModel
 
 class Token(db.Model, BaseModel):
     id = db.Column(db.Integer, primary_key=True)

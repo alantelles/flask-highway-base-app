@@ -1,5 +1,5 @@
 from app import db
-from dont_touch.models_mixins import BaseModel
+from app.base_model import BaseModel
 
 class UserRole(db.Model, BaseModel):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)

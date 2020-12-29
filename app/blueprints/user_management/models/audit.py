@@ -1,5 +1,5 @@
 from app import db
-from dont_touch.models_mixins import BaseModel
+from app.base_model import BaseModel
 
 class Audit(db.Model, BaseModel):
     id = db.Column(db.Integer, primary_key=True)

@@ -48,3 +48,12 @@ app.add_url_rule('/login', 'login', default_views.login, methods=['GET'])
 app.add_url_rule('/login', 'login_try', default_views.login_try, methods=['POST'])
 app.add_url_rule('/logout', 'logout', default_views.logout, methods=['GET', 'POST'])
 app.add_url_rule('/site_map', 'site_map', default_views.site_map, methods=['GET'])
+
+@app.after_request
+def after_request(response):
+    # ADVICE These headers are a first layer of security for websites. You should not remove this section
+    response.headers['Strict-Transport-Security'] = 'max-age={}; includeSubDomains'.format(3600*24*365)
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    response.headers['X-Frame-Options'] = 'DENY'
+    # END ADVICE
+    return response

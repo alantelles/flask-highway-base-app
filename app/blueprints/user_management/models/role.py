@@ -1,5 +1,5 @@
 from app import db
-from dont_touch.models_mixins import BaseModel
+from app.base_model import BaseModel
 from app.blueprints.user_management.models.user_role import UserRole
 
 class Role(db.Model, BaseModel):
