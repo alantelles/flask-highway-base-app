@@ -14,6 +14,7 @@ class RolesViews(BaseViews):
     @only_admin
     def index(self):
         self.roles = Role.query.all()
+        # return render_template('user_management/roles/index.html', roles=self.roles)
         return self.render('index')
 
     @only_admin
@@ -22,8 +23,11 @@ class RolesViews(BaseViews):
         role = Role(name=name)
         db.session.add(role)
         db.session.commit()
-        return redirect(url_for('user_management.roles.show', id=role.id))
+        self.id = role.id
+        return self.redirect('show')
+        # return redirect(url_for('user_management.roles.show', id=role.id))
 
+    
     @only_admin
     def new(self):
         return self.render('new')
